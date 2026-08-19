@@ -5,11 +5,33 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  /* Surface colors (backgrounds) - 900 is darkest */
+  --color-surface-700: hsl(198 100% 5%); /* panel/card bg */
+  --color-surface-800: hsl(205 100% 4%); /* card/input bg */
+  --color-surface-900: hsl(220 100% 4%); /* darkest page bg */
+
+  /* Foreground colors (text) */
+  --color-foreground-900: hsl(194 100% 88%); /* primary text */
+  --color-foreground-600: hsl(194 65% 62%); /* muted text */
+  --color-foreground-600-muted: hsl(194 65% 62% / 0.5);
+  --color-foreground-600-subtle: hsl(194 65% 62% / 0.7);
+
+  /* Accent/Highlight */
+  --color-accent: hsl(190 100% 42%);
+  --color-primary-ring: hsl(190 100% 42% / 0.2);
+
+  /* Border colors */
+  --color-stroke: hsl(195 100% 12%); /* default border */
+  --color-stroke-muted: hsl(195 100% 12%); /* subtle border */
+
+  /* Semantic colors */
+  --color-primary: hsl(190 100% 42%);
+  --color-secondary: hsl(193 100% 18%);
+  --color-danger: hsl(7 100% 66%);
+  --color-warning: hsl(53 100% 51%);
+  --color-success: hsl(162 100% 42%);
+  --color-info: hsl(217 100% 70%);
 }
 
 @media (prefers-color-scheme: dark) {
