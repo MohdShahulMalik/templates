@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keystone — Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-ink:        #020B14;
+    --color-card:       #031019;
+    --color-edge:       #00212E;
+    --color-ice:        #C9F2FF;
+    --color-body:       #7AB5C6;
+    --color-acc-cyan:   #00B8D6;
+    --color-acc-blue:   #0A84FF;
+    --color-ok:         #10D9A0;
+    --color-info:       #38BDF8;
+    --color-danger:     #FB7185;
+
+    --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-mono:    "Space Mono", ui-monospace, monospace;
+  }
+</style>
+
+<style>
+  html { background-color: #020B14; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  .section-label {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600; font-size: 13px; letter-spacing: .12em;
+    text-transform: uppercase; line-height: 1;
+    display: flex; align-items: center; gap: .75rem;
+  }
+  .section-label::before { content:""; width:1.5rem; height:2px; background:#00B8D6; flex:none; }
+
+  .eyebrow {
+    font-family: "Space Mono", monospace; text-transform: uppercase;
+    letter-spacing: .14em; font-size: 11px; line-height: 1.4;
+  }
+
+  .card { background:#031019; border:1px solid #00212E; border-radius:20px; }
+  .card-hover { transition: border-color .25s ease; }
+  .card-hover:hover { border-color: rgba(0,184,214,.5); }
+
+  .btn-primary {
+    background:#00B8D6; color:#02131C; border:1px solid #00B8D6;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  .btn-primary:hover { background:#33C7DE; border-color:#33C7DE; }
+
+  .btn-secondary {
+    border:1px solid #00394C; color:#C9F2FF; background:rgba(3,16,25,.6);
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .btn-secondary:hover { border-color:#00B8D6; background:rgba(0,184,214,.08); }
+
+  .pill {
+    display:inline-flex; align-items:center; gap:.5rem; border-radius:8px;
+    border:1px solid #00212E; background:rgba(2,11,20,.75); padding:.3rem .6rem;
+    font-family:"Space Mono", monospace; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:#7AB5C6; white-space:nowrap;
+  }
+  .dot { width:6px; height:6px; border-radius:9999px; flex:none; }
+
+  .nav-item {
+    display:flex; align-items:center; gap:.75rem; border-radius:12px;
+    padding:.6rem .75rem; font-size:14px; color:#7AB5C6;
+    border:1px solid transparent; transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+  .nav-item:hover { color:#C9F2FF; background:rgba(0,184,214,.06); }
+  .nav-item[aria-current="page"] {
+    color:#C9F2FF; border-color:rgba(0,184,214,.35); background:rgba(0,184,214,.08);
+  }
+
+  .pulse-dot { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+  @media (prefers-reduced-motion: reduce){ .pulse-dot{animation:none} }
+
+  ::selection { background: rgba(0,184,214,.3); color:#EAFBFF; }
+  :focus-visible { outline:2px solid #00B8D6; outline-offset:2px; border-radius:6px; }
+</style>
+</head>
+
+<body class="bg-ink font-display text-body">
+
+<div class="flex min-h-screen">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sticky top-0 hidden h-screen w-60 flex-none border-r border-edge bg-card/40 px-4 py-5 lg:flex lg:flex-col">
+    <a href="#" class="flex items-center gap-3 px-1">
+      <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-acc-cyan/30 bg-acc-cyan/10">
+        <svg class="h-4 w-4 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" role="img" aria-label="Keystone">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </span>
+      <span class="text-lg font-semibold tracking-tight text-ice">Keystone</span>
+    </a>
+
+    <nav class="mt-8 space-y-1" aria-label="Primary">
+      <p class="eyebrow px-2 pb-2 text-body/50">Workspace</p>
+      <a href="#" class="nav-item" aria-current="page">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>
+        Research
+        <span class="ml-auto rounded-md border border-acc-cyan/30 px-1.5 py-0.5 font-mono text-[10px] text-acc-cyan">2</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg>
+        Pipeline
+      </a>
+      <a href="#" class="nav-item">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/></svg>
+        Resume
+      </a>
+      <a href="#" class="nav-item">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7" stroke-linecap="round"/></svg>
+        DSA Prep
+        <span class="ml-auto font-mono text-[10px] text-body/50">soon</span>
+      </a>
+    </nav>
+
+    <div class="mt-auto space-y-3">
+      <div class="rounded-2xl border border-edge bg-ink/60 p-4">
+        <div class="flex items-center justify-between gap-3">
+          <p class="eyebrow text-body/60">Agents</p>
+          <span class="dot bg-ok pulse-dot" aria-hidden="true"></span>
+        </div>
+        <p class="mt-2 font-mono text-sm text-ice">2 running · 1 queued</p>
+        <div class="mt-3 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:68%"></div></div>
+      </div>
+      <a href="#" class="nav-item">
+        <span class="flex h-6 w-6 items-center justify-center rounded-full border border-edge bg-ink font-mono text-[10px] text-ice">AR</span>
+        Arjun R.
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="min-w-0 flex-1">
+
+    <!-- Topbar -->
+    <header class="sticky top-0 z-40 border-b border-edge bg-ink/80 backdrop-blur-xl">
+      <div class="flex h-16 items-center gap-4 px-5 sm:px-8">
+        <div class="min-w-0">
+          <p class="eyebrow text-body/60">Overview</p>
+          <h1 class="truncate text-base font-semibold text-ice">Good evening, Arjun</h1>
+        </div>
+
+        <div class="ml-auto hidden items-center gap-2 md:flex">
+          <label class="relative">
+            <span class="sr-only">Search jobs</span>
+            <input type="search" placeholder="Search roles, companies…"
+              class="w-64 rounded-xl border border-edge bg-card/80 py-2 pl-9 pr-3 font-mono text-xs text-ice placeholder:text-body/50 focus:border-acc-cyan/50 focus:outline-none" />
+            <svg class="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-body/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>
+          </label>
+          <div class="flex overflow-hidden rounded-xl border border-edge" role="group" aria-label="Date range">
+            <button class="bg-acc-cyan/10 px-3 py-2 font-mono text-[11px] uppercase tracking-wider text-acc-cyan">7d</button>
+            <button class="px-3 py-2 font-mono text-[11px] uppercase tracking-wider text-body hover:text-ice">30d</button>
+            <button class="px-3 py-2 font-mono text-[11px] uppercase tracking-wider text-body hover:text-ice">All</button>
+          </div>
+        </div>
+
+        <a href="#" class="btn-primary ml-auto rounded-xl px-4 py-2 text-sm font-semibold md:ml-0">New research</a>
+      </div>
+    </header>
+
+    <main class="px-5 py-8 sm:px-8">
+
+      <!-- KPI ROW -->
+      <section aria-label="Key metrics">
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+          <article class="card card-hover p-5">
+            <div class="flex items-start justify-between gap-3">
+              <p class="eyebrow text-body/60">Total tracked</p>
+              <span class="pill border-ok/30 text-ok">+18%</span>
+            </div>
+            <p class="mt-4 font-mono text-3xl font-bold text-ice">214</p>
+            <svg class="mt-4 h-10 w-full" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,26 15,22 30,24 45,16 60,18 75,11 90,13 105,6 120,4" fill="none" stroke="#00B8D6" stroke-width="1.6"/>
+            </svg>
+          </article>
+
+          <article class="card card-hover p-5">
+            <div class="flex items-start justify-between gap-3">
+              <p class="eyebrow text-body/60">Applied</p>
+              <span class="pill border-info/30 text-info">+6</span>
+            </div>
+            <p class="mt-4 font-mono text-3xl font-bold text-ice">87</p>
+            <svg class="mt-4 h-10 w-full" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,28 15,20 30,23 45,19 60,12 75,15 90,9 105,10 120,5" fill="none" stroke="#38BDF8" stroke-width="1.6"/>
+            </svg>
+          </article>
+
+          <article class="card card-hover p-5">
+            <div class="flex items-start justify-between gap-3">
+              <p class="eyebrow text-body/60">Interviews</p>
+              <span class="pill border-acc-cyan/30 text-acc-cyan">4 active</span>
+            </div>
+            <p class="mt-4 font-mono text-3xl font-bold text-ice">11</p>
+            <svg class="mt-4 h-10 w-full" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,24 15,25 30,18 45,20 60,14 75,16 90,10 105,12 120,8" fill="none" stroke="#C9F2FF" stroke-width="1.6"/>
+            </svg>
+          </article>
+
+          <article class="card card-hover p-5">
+            <div class="flex items-start justify-between gap-3">
+              <p class="eyebrow text-body/60">Offers</p>
+              <span class="pill border-ok/30 text-ok"><span class="dot bg-ok" aria-hidden="true"></span>new</span>
+            </div>
+            <p class="mt-4 font-mono text-3xl font-bold text-ok">2</p>
+            <svg class="mt-4 h-10 w-full" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,30 15,30 30,28 45,28 60,24 75,24 90,18 105,14 120,8" fill="none" stroke="#10D9A0" stroke-width="1.6"/>
+            </svg>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CHART + FUNNEL -->
+      <section class="mt-6 grid gap-6 xl:grid-cols-3" aria-label="Activity and funnel">
+
+        <!-- Chart -->
+        <div class="card p-6 xl:col-span-2">
+          <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <div>
+              <p class="section-label text-acc-cyan">Application velocity</p>
+              <p class="mt-3 font-mono text-xs text-body/70">applications submitted per day · last 14 days</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="pill"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Applied</span>
+              <span class="pill"><span class="dot bg-info" aria-hidden="true"></span>Discovered</span>
+            </div>
+          </div>
+
+          <div class="mt-6 flex gap-4">
+            <div class="flex flex-none flex-col justify-between py-1 font-mono text-[10px] text-body/50">
+              <span>24</span><span>16</span><span>8</span><span>0</span>
+            </div>
+            <svg class="h-48 w-full" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Line chart of applications and discoveries over 14 days">
+              <g stroke="#00212E" stroke-width="1">
+                <line x1="0" y1="1" x2="320" y2="1"/>
+                <line x1="0" y1="40" x2="320" y2="40"/>
+                <line x1="0" y1="80" x2="320" y2="80"/>
+                <line x1="0" y1="119" x2="320" y2="119"/>
+              </g>
+              <polyline points="0,96 24,88 48,92 72,70 96,76 120,58 144,64 168,44 192,50 216,36 240,40 264,26 288,30 312,18"
+                        fill="none" stroke="#38BDF8" stroke-width="2" stroke-linejoin="round"/>
+              <polyline points="0,110 24,104 48,108 72,96 96,100 120,88 144,94 168,80 192,84 216,72 240,78 264,62 288,68 312,54"
+                        fill="none" stroke="#00B8D6" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="mt-3 flex justify-between pl-8 font-mono text-[10px] text-body/50">
+            <span>Mar 03</span><span>Mar 07</span><span>Mar 11</span><span>Mar 16</span>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3 border-t border-edge pt-5 sm:grid-cols-4">
+            <div class="rounded-xl border border-edge bg-ink/60 p-3">
+              <p class="font-mono text-lg font-bold text-ice">6.2</p>
+              <p class="eyebrow mt-1 text-body/60">Apps / day</p>
+            </div>
+            <div class="rounded-xl border border-edge bg-ink/60 p-3">
+              <p class="font-mono text-lg font-bold text-ice">41%</p>
+              <p class="eyebrow mt-1 text-body/60">Reply rate</p>
+            </div>
+            <div class="rounded-xl border border-edge bg-ink/60 p-3">
+              <p class="font-mono text-lg font-bold text-ok">94</p>
+              <p class="eyebrow mt-1 text-body/60">Verified</p>
+            </div>
+            <div class="rounded-xl border border-edge bg-ink/60 p-3">
+              <p class="font-mono text-lg font-bold text-danger">34</p>
+              <p class="eyebrow mt-1 text-body/60">Dupes cut</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Funnel -->
+        <div class="card p-6">
+          <div class="flex items-baseline justify-between gap-4">
+            <p class="section-label text-acc-cyan">Funnel</p>
+            <p class="font-mono text-xs text-body/70">all time</p>
+          </div>
+
+          <ul class="mt-6 space-y-5">
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Saved</span>
+                <span class="font-mono text-sm text-ice">214</span>
+              </div>
+              <div class="mt-2 h-2 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-body/60" style="width:100%"></div></div>
+            </li>
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Applied</span>
+                <span class="font-mono text-sm text-ice">87</span>
+              </div>
+              <div class="mt-2 h-2 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:41%"></div></div>
+              <p class="mt-1.5 font-mono text-[10px] uppercase tracking-wider text-body/50">41% of saved</p>
+            </li>
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Interview</span>
+                <span class="font-mono text-sm text-ice">11</span>
+              </div>
+              <div class="mt-2 h-2 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:13%"></div></div>
+              <p class="mt-1.5 font-mono text-[10px] uppercase tracking-wider text-body/50">13% of applied</p>
+            </li>
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Offer</span>
+                <span class="font-mono text-sm text-ok">2</span>
+              </div>
+              <div class="mt-2 h-2 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:4%"></div></div>
+              <p class="mt-1.5 font-mono text-[10px] uppercase tracking-wider text-body/50">18% of interviews</p>
+            </li>
+          </ul>
+
+          <div class="mt-6 rounded-2xl border border-edge bg-ink/60 p-4">
+            <p class="eyebrow text-body/60">Median time to first reply</p>
+            <p class="mt-2 font-mono text-xl font-bold text-ice">4.1 days</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESEARCH + ACTIVITY -->
+      <section class="mt-6 grid gap-6 xl:grid-cols-3" aria-label="Research and activity">
+
+        <div class="card p-6 xl:col-span-2">
+          <div class="flex items-baseline justify-between gap-4">
+            <p class="section-label text-acc-cyan">Active research</p>
+            <a href="#" class="font-mono text-xs font-medium text-acc-cyan underline-offset-4 hover:underline">View all</a>
+          </div>
+
+          <ul class="mt-6 space-y-4">
+            <li class="rounded-2xl border border-edge bg-ink/60 p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <p class="text-sm font-semibold text-ice">React jobs · EU remote</p>
+                <span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan pulse-dot" aria-hidden="true"></span>Running</span>
+              </div>
+              <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-ink" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="React research progress">
+                <div class="h-full rounded-full bg-acc-cyan" style="width:68%"></div>
+              </div>
+              <p class="mt-3 font-mono text-xs text-body/70">68% · 30 matched · 2 subagents · session 042</p>
+            </li>
+
+            <li class="rounded-2xl border border-edge bg-ink/60 p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <p class="text-sm font-semibold text-ice">Platform / Infra · Berlin</p>
+                <span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan pulse-dot" aria-hidden="true"></span>Running</span>
+              </div>
+              <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-ink" role="progressbar" aria-valuenow="24" aria-valuemin="0" aria-valuemax="100" aria-label="Platform research progress">
+                <div class="h-full rounded-full bg-acc-cyan" style="width:24%"></div>
+              </div>
+              <p class="mt-3 font-mono text-xs text-body/70">24% · 7 matched · 1 subagent · session 043</p>
+            </li>
+
+            <li class="rounded-2xl border border-edge bg-ink/60 p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <p class="text-sm font-semibold text-ice">TypeScript · Contract</p>
+                <span class="pill">Queued</span>
+              </div>
+              <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-ink"><div class="h-full rounded-full bg-body/30" style="width:0%"></div></div>
+              <p class="mt-3 font-mono text-xs text-body/60">waiting for agent slot</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card p-6">
+          <p class="section-label text-acc-cyan">Activity</p>
+          <ol class="mt-6 space-y-4 border-l border-edge pl-5">
+            <li class="relative">
+              <span class="absolute -left-[22px] top-1.5 h-2.5 w-2.5 rounded-full border border-ok/50 bg-ink"><span class="m-[3px] block h-1 w-1 rounded-full bg-ok"></span></span>
+              <p class="text-sm text-ice">Offer received — <span class="font-semibold">Vercel</span></p>
+              <p class="mt-1 font-mono text-[11px] text-body/60">2h ago</p>
+            </li>
+            <li class="relative">
+              <span class="absolute -left-[22px] top-1.5 h-2.5 w-2.5 rounded-full border border-acc-cyan/50 bg-ink"><span class="m-[3px] block h-1 w-1 rounded-full bg-acc-cyan"></span></span>
+              <p class="text-sm text-ice">Moved to Interview — <span class="font-semibold">Linear</span></p>
+              <p class="mt-1 font-mono text-[11px] text-body/60">5h ago</p>
+            </li>
+            <li class="relative">
+              <span class="absolute -left-[22px] top-1.5 h-2.5 w-2.5 rounded-full border border-info/50 bg-ink"><span class="m-[3px] block h-1 w-1 rounded-full bg-info"></span></span>
+              <p class="text-sm text-ice">30 roles verified · 11 dupes removed</p>
+              <p class="mt-1 font-mono text-[11px] text-body/60">yesterday</p>
+            </li>
+            <li class="relative">
+              <span class="absolute -left-[22px] top-1.5 h-2.5 w-2.5 rounded-full border border-edge bg-ink"><span class="m-[3px] block h-1 w-1 rounded-full bg-body/60"></span></span>
+              <p class="text-sm text-ice">resume.pdf re-parsed · 4 new skills</p>
+              <p class="mt-1 font-mono text-[11px] text-body/60">2 days ago</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- INTERVIEWS TABLE -->
+      <section class="mt-6 card overflow-hidden" aria-label="Upcoming interviews">
+        <div class="flex flex-wrap items-baseline justify-between gap-4 border-b border-edge px-6 py-5">
+          <p class="section-label text-acc-cyan">Upcoming interviews</p>
+          <p class="font-mono text-xs text-body/70">4 scheduled</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[640px] text-left">
+            <thead>
+              <tr class="border-b border-edge">
+                <th scope="col" class="eyebrow px-6 py-3 font-normal text-body/60">Company</th>
+                <th scope="col" class="eyebrow px-6 py-3 font-normal text-body/60">Role</th>
+                <th scope="col" class="eyebrow px-6 py-3 font-normal text-body/60">Round</th>
+                <th scope="col" class="eyebrow px-6 py-3 font-normal text-body/60">When</th>
+                <th scope="col" class="eyebrow px-6 py-3 font-normal text-body/60">Stage</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-edge">
+              <tr class="transition-colors hover:bg-acc-cyan/5">
+                <td class="px-6 py-4 text-sm font-semibold text-ice">Vercel</td>
+                <td class="px-6 py-4 text-sm text-body">Sr. Frontend, React Core</td>
+                <td class="px-6 py-4 font-mono text-xs text-body">Final · System design</td>
+                <td class="px-6 py-4 font-mono text-xs text-ice">Tomorrow 14:00</td>
+                <td class="px-6 py-4"><span class="pill border-ok/30 text-ok"><span class="dot bg-ok" aria-hidden="true"></span>Offer stage</span></td>
+              </tr>
+              <tr class="transition-colors hover:bg-acc-cyan/5">
+                <td class="px-6 py-4 text-sm font-semibold text-ice">Linear</td>
+                <td class="px-6 py-4 text-sm text-body">Product Engineer, Editor</td>
+                <td class="px-6 py-4 font-mono text-xs text-body">Round 2 · Pairing</td>
+                <td class="px-6 py-4 font-mono text-xs text-ice">Thu 10:30</td>
+                <td class="px-6 py-4"><span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Interview</span></td>
+              </tr>
+              <tr class="transition-colors hover:bg-acc-cyan/5">
+                <td class="px-6 py-4 text-sm font-semibold text-ice">Supabase</td>
+                <td class="px-6 py-4 text-sm text-body">Full-stack Engineer</td>
+                <td class="px-6 py-4 font-mono text-xs text-body">Round 1 · Screen</td>
+                <td class="px-6 py-4 font-mono text-xs text-ice">Fri 16:00</td>
+                <td class="px-6 py-4"><span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Interview</span></td>
+              </tr>
+              <tr class="transition-colors hover:bg-acc-cyan/5">
+                <td class="px-6 py-4 text-sm font-semibold text-ice">Raycast</td>
+                <td class="px-6 py-4 text-sm text-body">Frontend Engineer</td>
+                <td class="px-6 py-4 font-mono text-xs text-body">Recruiter call</td>
+                <td class="px-6 py-4 font-mono text-xs text-ice">Mon 09:15</td>
+                <td class="px-6 py-4"><span class="pill border-info/30 text-info"><span class="dot bg-info" aria-hidden="true"></span>Applied</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+</body>
+</html>

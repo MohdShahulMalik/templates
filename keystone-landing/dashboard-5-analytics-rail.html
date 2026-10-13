@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keystone — Applications</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-ink:        #020B14;
+    --color-card:       #031019;
+    --color-edge:       #00212E;
+    --color-ice:        #C9F2FF;
+    --color-body:       #7AB5C6;
+    --color-acc-cyan:   #00B8D6;
+    --color-ok:         #10D9A0;
+    --color-info:       #38BDF8;
+    --color-danger:     #FB7185;
+
+    --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-mono:    "Space Mono", ui-monospace, monospace;
+  }
+</style>
+
+<style>
+  html { background-color:#020B14; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  .section-label {
+    font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:13px;
+    letter-spacing:.12em; text-transform:uppercase; line-height:1;
+    display:flex; align-items:center; gap:.75rem;
+  }
+  .section-label::before { content:""; width:1.5rem; height:2px; background:#00B8D6; flex:none; }
+
+  .eyebrow {
+    font-family:"Space Mono",monospace; text-transform:uppercase;
+    letter-spacing:.14em; font-size:11px; line-height:1.4;
+  }
+
+  .card { background:#031019; border:1px solid #00212E; border-radius:20px; }
+
+  .btn-primary { background:#00B8D6; color:#02131C; border:1px solid #00B8D6; transition: background-color .2s ease; }
+  .btn-primary:hover { background:#33C7DE; }
+
+  .btn-secondary {
+    border:1px solid #00394C; color:#C9F2FF; background:rgba(3,16,25,.6);
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .btn-secondary:hover { border-color:#00B8D6; background:rgba(0,184,214,.08); }
+
+  .pill {
+    display:inline-flex; align-items:center; gap:.5rem; border-radius:8px;
+    border:1px solid #00212E; background:rgba(2,11,20,.75); padding:.3rem .6rem;
+    font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:#7AB5C6; white-space:nowrap;
+  }
+  .dot { width:6px; height:6px; border-radius:9999px; flex:none; }
+
+  .tab {
+    padding:.55rem .9rem; border-radius:10px; font-size:13px; color:#7AB5C6;
+    border:1px solid transparent; transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+  .tab:hover { color:#C9F2FF; }
+  .tab[aria-selected="true"] {
+    color:#C9F2FF; border-color:rgba(0,184,214,.35); background:rgba(0,184,214,.08);
+  }
+
+  .hm { width:100%; aspect-ratio:1; border-radius:4px; background:#00212E; }
+  .hm-1 { background:rgba(0,184,214,.25); }
+  .hm-2 { background:rgba(0,184,214,.5); }
+  .hm-3 { background:rgba(0,184,214,.75); }
+  .hm-4 { background:#00B8D6; }
+
+  .pulse-dot { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+  @media (prefers-reduced-motion: reduce){ .pulse-dot{animation:none} }
+
+  ::selection { background: rgba(0,184,214,.3); color:#EAFBFF; }
+  :focus-visible { outline:2px solid #00B8D6; outline-offset:2px; border-radius:6px; }
+</style>
+</head>
+
+<body class="bg-ink font-display text-body">
+
+<!-- ============ TOPBAR ============ -->
+<header class="sticky top-0 z-50 border-b border-edge bg-ink/80 backdrop-blur-xl">
+  <div class="mx-auto flex h-16 max-w-[1500px] items-center gap-5 px-5 sm:px-8">
+    <a href="#" class="flex items-center gap-3">
+      <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-acc-cyan/30 bg-acc-cyan/10">
+        <svg class="h-4 w-4 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" role="img" aria-label="Keystone"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+      <span class="text-lg font-semibold tracking-tight text-ice">Keystone</span>
+    </a>
+    <span class="hidden font-mono text-xs text-body/50 sm:block">/ dashboard / applications</span>
+
+    <div class="ml-auto flex items-center gap-3">
+      <label class="relative hidden sm:block">
+        <span class="sr-only">Search</span>
+        <input type="search" placeholder="Search…" class="w-56 rounded-xl border border-edge bg-card/80 py-2 pl-9 pr-3 font-mono text-xs text-ice placeholder:text-body/50 focus:border-acc-cyan/50 focus:outline-none" />
+        <svg class="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-body/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>
+      </label>
+      <span class="flex h-9 w-9 items-center justify-center rounded-full border border-edge bg-card font-mono text-[11px] text-ice">AR</span>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-[1500px] px-5 py-8 sm:px-8">
+
+  <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
+
+    <!-- ============ MAIN COLUMN ============ -->
+    <div class="min-w-0">
+
+      <!-- Metric header -->
+      <section aria-label="Headline metrics">
+        <p class="section-label text-acc-cyan">Applications</p>
+
+        <div class="mt-6 flex flex-wrap items-end gap-x-12 gap-y-6">
+          <div>
+            <p class="font-mono text-5xl font-bold leading-none text-ice">87</p>
+            <p class="eyebrow mt-3 text-body/60">Submitted · all time</p>
+          </div>
+          <div class="h-14 w-px bg-edge" aria-hidden="true"></div>
+          <div>
+            <p class="font-mono text-2xl font-bold text-ice">41%</p>
+            <p class="eyebrow mt-2 text-body/60">Apply rate</p>
+          </div>
+          <div>
+            <p class="font-mono text-2xl font-bold text-ice">4.1d</p>
+            <p class="eyebrow mt-2 text-body/60">Median reply</p>
+          </div>
+          <div>
+            <p class="font-mono text-2xl font-bold text-ok">2</p>
+            <p class="eyebrow mt-2 text-body/60">Offers</p>
+          </div>
+          <div>
+            <p class="font-mono text-2xl font-bold text-danger">62</p>
+            <p class="eyebrow mt-2 text-body/60">Rejected</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trend strip -->
+      <section class="card mt-7 p-6" aria-label="Submission trend">
+        <div class="flex flex-wrap items-baseline justify-between gap-4">
+          <p class="eyebrow text-body/60">Submissions · last 14 days</p>
+          <span class="pill border-ok/30 text-ok">▲ 18% vs prev</span>
+        </div>
+
+        <div class="mt-6 flex h-28 items-end gap-1.5" role="img" aria-label="Bar chart of daily submissions over 14 days">
+          <div class="h-[30%] flex-1 rounded-t bg-edge"></div>
+          <div class="h-[45%] flex-1 rounded-t bg-edge"></div>
+          <div class="h-[38%] flex-1 rounded-t bg-edge"></div>
+          <div class="h-[58%] flex-1 rounded-t bg-acc-cyan/40"></div>
+          <div class="h-[50%] flex-1 rounded-t bg-acc-cyan/40"></div>
+          <div class="h-[72%] flex-1 rounded-t bg-acc-cyan/60"></div>
+          <div class="h-[64%] flex-1 rounded-t bg-acc-cyan/60"></div>
+          <div class="h-[85%] flex-1 rounded-t bg-acc-cyan"></div>
+          <div class="h-[70%] flex-1 rounded-t bg-acc-cyan/60"></div>
+          <div class="h-[92%] flex-1 rounded-t bg-acc-cyan"></div>
+          <div class="h-[80%] flex-1 rounded-t bg-acc-cyan"></div>
+          <div class="h-[100%] flex-1 rounded-t bg-acc-cyan"></div>
+          <div class="h-[88%] flex-1 rounded-t bg-acc-cyan"></div>
+          <div class="h-[96%] flex-1 rounded-t bg-acc-cyan"></div>
+        </div>
+
+        <div class="mt-3 flex justify-between font-mono text-[10px] text-body/50">
+          <span>Mar 03</span><span>Mar 10</span><span>Mar 16</span>
+        </div>
+      </section>
+
+      <!-- Tabs + table -->
+      <section class="mt-7" aria-label="Application list">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap gap-1.5" role="tablist" aria-label="Filter by stage">
+            <button class="tab" role="tab" aria-selected="true">All <span class="ml-1 font-mono text-[11px] text-body/60">214</span></button>
+            <button class="tab" role="tab" aria-selected="false">Applied <span class="ml-1 font-mono text-[11px] text-body/60">87</span></button>
+            <button class="tab" role="tab" aria-selected="false">Interview <span class="ml-1 font-mono text-[11px] text-body/60">11</span></button>
+            <button class="tab" role="tab" aria-selected="false">Offer <span class="ml-1 font-mono text-[11px] text-body/60">2</span></button>
+            <button class="tab" role="tab" aria-selected="false">Rejected <span class="ml-1 font-mono text-[11px] text-body/60">62</span></button>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn-secondary rounded-xl px-3.5 py-2 font-mono text-[11px] uppercase tracking-wider">Sort: match</button>
+            <button class="btn-primary rounded-xl px-3.5 py-2 text-xs font-semibold">Log application</button>
+          </div>
+        </div>
+
+        <div class="card mt-5 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[840px] text-left">
+              <thead>
+                <tr class="border-b border-edge">
+                  <th scope="col" class="eyebrow px-6 py-3.5 font-normal text-body/55">Company / role</th>
+                  <th scope="col" class="eyebrow px-6 py-3.5 font-normal text-body/55">Comp</th>
+                  <th scope="col" class="eyebrow px-6 py-3.5 font-normal text-body/55">Match</th>
+                  <th scope="col" class="eyebrow px-6 py-3.5 font-normal text-body/55">Momentum</th>
+                  <th scope="col" class="eyebrow px-6 py-3.5 font-normal text-body/55">Age</th>
+                  <th scope="col" class="eyebrow px-6 py-3.5 font-normal text-body/55">Stage</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-edge">
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Vercel</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Sr. Frontend Engineer, React Core</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$198k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:96%"></div></div>
+                      <span class="font-mono text-xs text-ok">96</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,20 16,18 32,12 48,10 64,5 80,2" fill="none" stroke="#10D9A0" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-body">21d</td>
+                  <td class="px-6 py-4"><span class="pill border-ok/30 text-ok"><span class="dot bg-ok" aria-hidden="true"></span>Offer</span></td>
+                </tr>
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Railway</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Platform Engineer</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$172k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:91%"></div></div>
+                      <span class="font-mono text-xs text-ok">91</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,22 16,16 32,17 48,9 64,8 80,4" fill="none" stroke="#10D9A0" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-body">26d</td>
+                  <td class="px-6 py-4"><span class="pill border-ok/30 text-ok"><span class="dot bg-ok" aria-hidden="true"></span>Offer</span></td>
+                </tr>
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Linear</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Product Engineer, Editor</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$167k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:89%"></div></div>
+                      <span class="font-mono text-xs text-acc-cyan">89</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,20 16,19 32,14 48,15 64,9 80,7" fill="none" stroke="#00B8D6" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-body">14d</td>
+                  <td class="px-6 py-4"><span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Interview</span></td>
+                </tr>
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Supabase</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Full-stack Engineer</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$158k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:87%"></div></div>
+                      <span class="font-mono text-xs text-acc-cyan">87</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,21 16,20 32,16 48,12 64,13 80,9" fill="none" stroke="#00B8D6" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-body">9d</td>
+                  <td class="px-6 py-4"><span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Interview</span></td>
+                </tr>
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Notion</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Senior Web Engineer</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$190k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:84%"></div></div>
+                      <span class="font-mono text-xs text-info">84</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,18 16,17 32,18 48,14 64,15 80,12" fill="none" stroke="#38BDF8" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-body">6d</td>
+                  <td class="px-6 py-4"><span class="pill border-info/30 text-info"><span class="dot bg-info" aria-hidden="true"></span>Applied</span></td>
+                </tr>
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Raycast</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Frontend Engineer</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$172k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:81%"></div></div>
+                      <span class="font-mono text-xs text-info">81</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,16 16,17 32,16 48,17 64,16 80,15" fill="none" stroke="#7AB5C6" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-body">3d</td>
+                  <td class="px-6 py-4"><span class="pill border-info/30 text-info"><span class="dot bg-info" aria-hidden="true"></span>Applied</span></td>
+                </tr>
+
+                <tr class="transition-colors hover:bg-acc-cyan/5">
+                  <td class="px-6 py-4">
+                    <p class="text-sm font-semibold text-ice">Cloudflare</p>
+                    <p class="mt-0.5 text-xs text-acc-cyan">Systems Engineer, Workers</p>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ice">$178k</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <div class="h-1.5 w-14 rounded-full bg-ink"><div class="h-full rounded-full bg-danger/70" style="width:62%"></div></div>
+                      <span class="font-mono text-xs text-danger">62</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <svg class="h-6 w-20" viewBox="0 0 80 24" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,10 16,12 32,15 48,18 64,20 80,22" fill="none" stroke="#FB7185" stroke-width="1.6"/>
+                    </svg>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-danger">11d</td>
+                  <td class="px-6 py-4"><span class="pill border-danger/30 text-danger"><span class="dot bg-danger" aria-hidden="true"></span>Stalled</span></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-4 border-t border-edge px-6 py-4">
+            <p class="font-mono text-[11px] text-body/60">Showing 7 of 214</p>
+            <div class="flex gap-2">
+              <button class="btn-secondary rounded-lg px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider">Prev</button>
+              <button class="btn-secondary rounded-lg px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ RIGHT RAIL ============ -->
+    <aside class="space-y-5 xl:sticky xl:top-24 xl:self-start" aria-label="Insights">
+
+      <!-- Research queue -->
+      <section class="card p-5">
+        <div class="flex items-center justify-between gap-3">
+          <p class="eyebrow text-body/60">Research queue</p>
+          <span class="pill border-ok/30 text-ok"><span class="dot bg-ok pulse-dot" aria-hidden="true"></span>2 live</span>
+        </div>
+
+        <ul class="mt-5 space-y-4">
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <p class="truncate text-sm text-ice">React · EU remote</p>
+              <span class="font-mono text-xs text-acc-cyan">68%</span>
+            </div>
+            <div class="mt-2 h-1.5 rounded-full bg-ink" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="React research progress">
+              <div class="h-full rounded-full bg-acc-cyan" style="width:68%"></div>
+            </div>
+            <p class="mt-1.5 font-mono text-[10px] text-body/60">30 matched · 11 dupes cut</p>
+          </li>
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <p class="truncate text-sm text-ice">Platform · Berlin</p>
+              <span class="font-mono text-xs text-acc-cyan">24%</span>
+            </div>
+            <div class="mt-2 h-1.5 rounded-full bg-ink" role="progressbar" aria-valuenow="24" aria-valuemin="0" aria-valuemax="100" aria-label="Platform research progress">
+              <div class="h-full rounded-full bg-acc-cyan" style="width:24%"></div>
+            </div>
+            <p class="mt-1.5 font-mono text-[10px] text-body/60">7 matched · 1 subagent</p>
+          </li>
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <p class="truncate text-sm text-body">TypeScript · Contract</p>
+              <span class="font-mono text-xs text-body/50">queued</span>
+            </div>
+            <div class="mt-2 h-1.5 rounded-full bg-ink"><div class="h-full rounded-full bg-body/25" style="width:3%"></div></div>
+          </li>
+        </ul>
+
+        <button class="btn-secondary mt-5 w-full rounded-xl py-2.5 text-xs font-semibold">Manage sessions</button>
+      </section>
+
+      <!-- Heatmap -->
+      <section class="card p-5">
+        <p class="eyebrow text-body/60">7-day activity</p>
+        <div class="mt-4 grid grid-cols-7 gap-1.5" role="img" aria-label="Activity heatmap by weekday over 4 weeks">
+          <div class="hm hm-2"></div><div class="hm hm-4"></div><div class="hm hm-3"></div><div class="hm hm-2"></div><div class="hm hm-3"></div><div class="hm hm-1"></div><div class="hm"></div>
+          <div class="hm hm-3"></div><div class="hm hm-4"></div><div class="hm hm-4"></div><div class="hm hm-2"></div><div class="hm hm-2"></div><div class="hm"></div><div class="hm hm-1"></div>
+          <div class="hm hm-1"></div><div class="hm hm-3"></div><div class="hm hm-2"></div><div class="hm hm-4"></div><div class="hm hm-3"></div><div class="hm hm-1"></div><div class="hm"></div>
+          <div class="hm hm-2"></div><div class="hm hm-4"></div><div class="hm hm-4"></div><div class="hm hm-3"></div><div class="hm hm-4"></div><div class="hm hm-2"></div><div class="hm hm-1"></div>
+        </div>
+        <div class="mt-3 grid grid-cols-7 gap-1.5 text-center font-mono text-[9px] text-body/45">
+          <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+        </div>
+        <p class="mt-4 border-t border-edge pt-4 font-mono text-[11px] text-body/70">Tuesdays are your strongest day — <span class="text-ice">2.3×</span> the weekly average.</p>
+      </section>
+
+      <!-- Skill match -->
+      <section class="card p-5">
+        <p class="eyebrow text-body/60">Skill demand vs. resume</p>
+        <ul class="mt-5 space-y-3.5">
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="text-sm text-ice">React</span><span class="font-mono text-[11px] text-ok">strong</span>
+            </div>
+            <div class="mt-1.5 h-1.5 rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:94%"></div></div>
+          </li>
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="text-sm text-ice">TypeScript</span><span class="font-mono text-[11px] text-ok">strong</span>
+            </div>
+            <div class="mt-1.5 h-1.5 rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:88%"></div></div>
+          </li>
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="text-sm text-ice">System design</span><span class="font-mono text-[11px] text-acc-cyan">ok</span>
+            </div>
+            <div class="mt-1.5 h-1.5 rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:61%"></div></div>
+          </li>
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="text-sm text-ice">Go</span><span class="font-mono text-[11px] text-danger">gap</span>
+            </div>
+            <div class="mt-1.5 h-1.5 rounded-full bg-ink"><div class="h-full rounded-full bg-danger/70" style="width:24%"></div></div>
+          </li>
+        </ul>
+        <p class="mt-5 border-t border-edge pt-4 font-mono text-[11px] text-body/70">38 of 87 postings asked for Go — biggest gap this month.</p>
+      </section>
+
+      <!-- Next up -->
+      <section class="card p-5">
+        <p class="eyebrow text-body/60">Next up</p>
+        <ol class="mt-4 space-y-3">
+          <li class="rounded-xl border border-edge bg-ink/60 p-3">
+            <p class="text-sm font-semibold text-ice">Vercel · Final round</p>
+            <p class="mt-1 font-mono text-[11px] text-acc-cyan">Tomorrow 14:00 · system design</p>
+          </li>
+          <li class="rounded-xl border border-edge bg-ink/60 p-3">
+            <p class="text-sm font-semibold text-ice">Linear · Pairing</p>
+            <p class="mt-1 font-mono text-[11px] text-acc-cyan">Thu 10:30 · editor internals</p>
+          </li>
+          <li class="rounded-xl border border-edge bg-ink/60 p-3">
+            <p class="text-sm font-semibold text-ice">Cloudflare · Follow-up</p>
+            <p class="mt-1 font-mono text-[11px] text-danger">overdue by 4 days</p>
+          </li>
+        </ol>
+      </section>
+
+    </aside>
+  </div>
+</main>
+
+</body>
+</html>

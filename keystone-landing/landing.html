@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keystone · Track. Discover. Ace.</title>
+<meta name="description" content="Keystone is an AI-powered career companion: track job applications, auto-discover relevant jobs with AI agents, and prep for interviews." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-ink:        #020B14;
+    --color-card:       #031019;
+    --color-edge:       #00212E;
+    --color-ice:        #C9F2FF;
+    --color-body:       #7AB5C6;
+    --color-acc-cyan:   #00B8D6;
+    --color-acc-blue:   #0A84FF;
+    --color-ok:         #10D9A0;
+    --color-info:       #38BDF8;
+    --color-danger:     #FB7185;
+
+    --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-mono:    "Space Mono", ui-monospace, monospace;
+
+    --radius-card: 20px;
+  }
+</style>
+
+<style>
+  html { background-color: #020B14; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  /* ---- Section label (sans, not mono - mono is reserved for data) ---- */
+  .section-label {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* ---- Eyebrow / data label (mono reserved for data only) ---- */
+  .eyebrow {
+    font-family: "Space Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  /* ---- Solid primary button (was cyan→blue gradient) ---- */
+  .btn-primary {
+    background-color: #00B8D6;
+    color: #FFFFFF;
+    border: 1px solid #00B8D6;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  .btn-primary:hover {
+    background-color: #33C7DE;
+    border-color: #33C7DE;
+  }
+
+  /* ---- Secondary outline button ---- */
+  .btn-secondary {
+    border: 1px solid #00394C;
+    color: #C9F2FF;
+    background-color: rgba(3,16,25,.6);
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .btn-secondary:hover {
+    border-color: #00B8D6;
+    background-color: rgba(0,184,214,.08);
+  }
+
+  /* ---- Card (border change on hover only, no lift) ---- */
+  .card {
+    background-color: #031019;
+    border: 1px solid #00212E;
+    border-radius: 20px;
+  }
+  .card-hover {
+    transition: border-color .25s ease;
+  }
+  .card-hover:hover {
+    border-color: rgba(0,184,214,.5);
+  }
+
+  /* ---- Pills ---- */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: 8px;
+    border: 1px solid #00212E;
+    background-color: rgba(2,11,20,.75);
+    padding: .3rem .6rem;
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #7AB5C6;
+    white-space: nowrap;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 9999px; flex: none; }
+
+  /* ---- Solid progress (was animated gradient) ---- */
+  .progress-fill {
+    background-color: #00B8D6;
+  }
+
+  /* ---- Hero glow (single soft wash, no grid) ---- */
+  .hero-glow {
+    background: radial-gradient(55% 45% at 50% 0%, rgba(0,184,214,.1) 0%, transparent 70%);
+  }
+
+  /* ---- Timeline (unique: solid beam rail + diamond nodes) ---- */
+  .timeline-rail {
+    background-color: rgba(0,184,214,.35);
+  }
+  .timeline-node {
+    box-shadow: none;
+  }
+
+  ::selection { background: rgba(0,184,214,.3); color: #EAFBFF; }
+
+  :focus-visible {
+    outline: 2px solid #00B8D6;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+</style>
+</head>
+
+<body class="bg-ink text-body font-display">
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-50 border-b border-edge/90 bg-ink/70 backdrop-blur-xl">
+  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-8 sm:px-10 xl:px-6" aria-label="Main">
+
+    <a href="#top" class="flex items-center gap-3">
+      <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-acc-cyan/30 bg-acc-cyan/10">
+        <svg class="h-4 w-4 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" role="img" aria-label="Keystone logo">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </span>
+      <span class="text-lg font-semibold tracking-tight text-ice">Keystone</span>
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      <a href="#features" class="text-sm text-body transition-colors hover:text-ice">Features</a>
+      <a href="#how-it-works" class="text-sm text-body transition-colors hover:text-ice">How it works</a>
+      <a href="#pricing" class="text-sm text-body transition-colors hover:text-ice">Pricing</a>
+    </div>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href="#" class="hidden rounded-lg px-3 py-2 text-sm text-body transition-colors hover:bg-acc-cyan/8 hover:text-ice sm:block">Sign in</a>
+      <a href="#" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Get started</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO - centered intro + how-to split ============ -->
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 hero-glow" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-6xl px-8 pt-16 pb-24 sm:px-10 sm:pt-24 sm:pb-32 xl:px-6">
+      <!-- Centered intro -->
+      <div class="mx-auto max-w-5xl text-center">
+        <h1 class="text-3xl font-normal leading-tight tracking-tight text-ice text-balance sm:text-4xl xl:whitespace-nowrap xl:text-[2.75rem]">
+          Track applications. Discover jobs. Ace interviews.
+        </h1>
+
+        <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-body sm:text-lg">
+          Keystone watches job boards with AI agents, removes duplicates, and tracks your pipeline
+          from Open to Offer, all in one dashboard.
+        </p>
+      </div>
+
+      <!-- Split: how-to left, dashboard right -->
+      <div class="mt-14 grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
+        <!-- Left: how to use -->
+        <div>
+          <p class="text-lg font-semibold text-ice">From scattered tabs to one pipeline:</p>
+          <ol class="mt-5 space-y-4 text-sm leading-relaxed text-body">
+            <li class="flex gap-3">
+              <span class="font-mono text-[13px] font-bold text-acc-cyan" aria-hidden="true">1.</span>
+              <span>On Keystone, upload a <strong class="font-semibold text-ice">resume PDF</strong> to build your match profile.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-mono text-[13px] font-bold text-acc-cyan" aria-hidden="true">2.</span>
+              <span>Start research with your <strong class="font-semibold text-ice">roles, countries and skills</strong>, agents verify and dedupe every listing.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="font-mono text-[13px] font-bold text-acc-cyan" aria-hidden="true">3.</span>
+              <span>When new matches stream in, <strong class="font-semibold text-ice">apply and track</strong> them from Open to Offer.</span>
+            </li>
+          </ol>
+
+          <p class="mt-6 text-sm text-body">Free while self-hosted. <span class="font-medium text-ice">No credit card required.</span></p>
+
+          <div class="mt-6 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <a href="#" class="btn-primary rounded-xl px-6 py-3 text-sm font-semibold">Start tracking free</a>
+            <a href="#how-it-works" class="text-sm font-semibold text-ice underline decoration-acc-cyan/50 underline-offset-8 hover:decoration-acc-cyan">See how it works</a>
+          </div>
+        </div>
+
+        <!-- Right: fake pipeline dashboard -->
+        <aside class="card p-6 sm:p-7" aria-label="Pipeline dashboard preview">
+          <div class="flex items-baseline justify-between gap-4">
+            <p class="section-label text-acc-cyan">Pipeline</p>
+            <p class="font-mono text-xs text-body/70">this week</p>
+          </div>
+          <ul class="mt-6 space-y-5">
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Open</span>
+                <span class="font-mono text-sm text-ice">34</span>
+              </div>
+              <div class="mt-2 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-body/60" style="width:85%"></div></div>
+            </li>
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Applied</span>
+                <span class="font-mono text-sm text-ice">12</span>
+              </div>
+              <div class="mt-2 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:42%"></div></div>
+            </li>
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Interview</span>
+                <span class="font-mono text-sm text-ice">4</span>
+              </div>
+              <div class="mt-2 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:22%"></div></div>
+            </li>
+            <li>
+              <div class="flex items-baseline justify-between gap-4">
+                <span class="text-sm font-medium text-ice">Offer</span>
+                <span class="font-mono text-sm text-ok">1</span>
+              </div>
+              <div class="mt-2 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:10%"></div></div>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIVE AI RESPONSE - wide screen overlapping hero ============ -->
+  <section id="live-response" class="relative z-10 mx-auto max-w-6xl px-8 sm:px-10 xl:px-6" aria-label="Live AI research response">
+    <div class="card mx-auto -mt-20 max-w-5xl overflow-hidden sm:-mt-28">
+      <!-- window chrome -->
+      <div class="flex items-center gap-4 border-b border-edge px-5 py-3">
+        <span class="flex flex-none gap-1.5" aria-hidden="true">
+          <span class="h-2.5 w-2.5 rounded-full bg-danger/70"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-body/40"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-ok/70"></span>
+        </span>
+        <span class="min-w-0 flex-1 truncate rounded-md border border-edge bg-ink/60 px-3 py-1 text-center font-mono text-[11px] text-body/70">keystone.local/research · session 042</span>
+      </div>
+
+      <div class="p-6 sm:p-8" aria-label="Live AI research response preview">
+        <div class="flex items-center justify-end gap-4">
+          <span class="pill border-ok/30 text-ok"><span class="dot bg-ok" aria-hidden="true"></span>Running</span>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          <h2 class="min-w-0 flex-1 truncate text-base font-bold text-ice">React jobs · EU remote</h2>
+          <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-body/60">session 042</span>
+        </div>
+
+        <!-- User prefs bubble -->
+        <div class="mt-4 flex justify-end">
+            <div class="max-w-[85%] rounded-xl rounded-br-sm border border-edge bg-ink/60 p-3 font-mono text-xs leading-relaxed text-body">
+              <span class="block"><span class="text-ice">Roles:</span> Frontend, React</span>
+              <span class="block"><span class="text-ice">Countries:</span> EU remote</span>
+              <span class="block"><span class="text-ice">Skills:</span> React, TypeScript</span>
+            </div>
+        </div>
+
+        <!-- Agent stream: thinking + tool + subagents + summary (mirrors AgentResponse) -->
+        <div class="mt-4 space-y-3">
+          <div class="rounded-r-lg border-l-2 border-info/40 bg-ink/60 px-3 py-2 text-xs italic leading-relaxed text-body">
+            <span class="font-semibold not-italic text-info">Thinking:</span>
+            splitting React × EU-remote into 2 slices — one subagent per slice, verifying each posting live…
+          </div>
+          <div class="rounded-r-md border-l-2 border-ok/50 bg-ink/60 px-3 py-1.5 font-mono text-xs text-body/80">
+            ✓ Webfetch https://boards.greenhouse.io (4s)
+          </div>
+          <div class="rounded-r-md border-l-2 border-ok/50 bg-ink/60 px-3 py-1.5 font-mono text-xs leading-relaxed text-body/80">
+            ✓ <span class="cursor-default text-acc-cyan underline decoration-acc-cyan/40 underline-offset-4 hover:decoration-acc-cyan">General Task - React jobs in Germany</span>
+            <span class="block pl-4 text-body/60">↳ 5 tools · 1m 04s</span>
+          </div>
+          <div class="rounded-r-md border-l-2 border-acc-cyan/60 bg-ink/60 px-3 py-1.5 font-mono text-xs leading-relaxed text-body/80">
+            ∴ <span class="cursor-default text-acc-cyan underline decoration-acc-cyan/40 underline-offset-4 hover:decoration-acc-cyan">General Task - React jobs in Netherlands</span>
+            <span class="block pl-4 text-body/60">↳ Websearch Senior React remote EU</span>
+          </div>
+          <div class="text-sm leading-relaxed text-body">
+            Found <strong class="font-semibold text-ice">30 verified roles</strong> across 2 slices —
+            see <a href="#" class="font-medium text-acc-cyan underline decoration-acc-cyan/40 underline-offset-4 hover:decoration-acc-cyan">General Task - React jobs in Germany</a>
+            and 1 more. Deduped 11 cross-posts, verified 27 companies.
+          </div>
+        </div>
+
+        <!-- Matched jobs: header + 2 cards + show more (mirrors ResearchClient + JobListingCard) -->
+        <div class="mt-5 border-t border-edge pt-4">
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <h3 class="min-w-0 text-sm font-semibold text-ice">Matched jobs <span class="ml-2 rounded-full border border-edge bg-ink/60 px-2.5 py-0.5 font-mono text-[11px] font-medium text-body">30 · streaming…</span></h3>
+            <a href="#" class="shrink-0 font-mono text-xs font-medium text-acc-cyan underline-offset-4 hover:underline">Show all (30)</a>
+          </div>
+
+          <div class="mt-4 grid min-w-0 items-start gap-4 lg:grid-cols-2">
+            <article class="min-w-0 overflow-hidden rounded-2xl border border-edge bg-ink/60 p-5">
+              <p class="text-base font-bold text-ice">Vercel</p>
+              <p class="mt-0.5 text-sm font-semibold text-acc-cyan">Senior Frontend Engineer, React Core</p>
+              <p class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-body">
+                <span class="text-ice">$165k – $210k</span>
+                <span aria-hidden="true" class="text-body/40">•</span>
+                <span>4+ yrs experience</span>
+              </p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="pill"><span class="dot bg-info" aria-hidden="true"></span>Remote · EU</span>
+                <span class="pill"><span class="dot bg-ok" aria-hidden="true"></span>Visa sponsored</span>
+                <span class="pill"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Open</span>
+              </div>
+              <p class="mt-3 line-clamp-3 text-[13px] leading-relaxed text-body">
+                You&rsquo;ll own rendering primitives in the React core team — shipping streaming SSR
+                improvements, profiling hydration cost, and collaborating with the framework team on
+                cache invalidation semantics&hellip;
+              </p>
+              <button type="button" class="mt-1.5 text-[13px] font-medium text-acc-cyan underline-offset-4 hover:underline">Show more</button>
+              <div class="mt-4 flex items-center justify-between gap-4">
+                <a href="#" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold">Apply Now</a>
+                <span class="eyebrow text-body/60">Found 2h ago</span>
+              </div>
+            </article>
+
+            <article class="min-w-0 overflow-hidden rounded-2xl border border-edge bg-ink/60 p-5">
+              <p class="text-base font-bold text-ice">Linear</p>
+              <p class="mt-0.5 text-sm font-semibold text-acc-cyan">Product Engineer, Editor</p>
+              <p class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-body">
+                <span class="text-ice">$150k – $185k</span>
+                <span aria-hidden="true" class="text-body/40">•</span>
+                <span>3+ yrs experience</span>
+              </p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="pill"><span class="dot bg-info" aria-hidden="true"></span>Remote · EU</span>
+                <span class="pill"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Open</span>
+              </div>
+              <p class="mt-3 line-clamp-3 text-[13px] leading-relaxed text-body">
+                You&rsquo;ll build the real-time editor surface — optimistic mutations, conflict-free
+                sync, and sub-50ms keystroke latency across every client&hellip;
+              </p>
+              <button type="button" class="mt-1.5 text-[13px] font-medium text-acc-cyan underline-offset-4 hover:underline">Show more</button>
+              <div class="mt-4 flex items-center justify-between gap-4">
+                <a href="#" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold">Apply Now</a>
+                <span class="eyebrow text-body/60">Found 3h ago</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="mt-4 flex justify-center">
+            <a href="#" class="btn-secondary rounded-xl px-6 py-2.5 text-sm font-semibold">Show more (28 remaining)</a>
+          </div>
+          <p class="mt-3 text-center font-mono text-[11px] leading-relaxed text-body/60">Jobs appear as they&rsquo;re verified — summary follows when all subagents finish.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="mx-auto max-w-6xl px-8 py-20 sm:px-10 sm:py-24 xl:px-6">
+    <h2 class="max-w-2xl text-3xl font-bold tracking-tight text-ice sm:text-4xl">
+      One system for the entire hunt.
+    </h2>
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-3">
+
+      <article class="card card-hover p-6 sm:p-7">
+        <svg class="h-6 w-6 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke-linecap="round"/>
+        </svg>
+        <h3 class="mt-5 text-lg font-semibold text-ice">Smart Tracking</h3>
+        <p class="mt-3 text-sm leading-relaxed text-body">
+          Track every role as a card in a searchable, filterable list, update status in one click
+          from Open to Offer, with pipeline, conversion and activity summarized on your dashboard.
+        </p>
+      </article>
+
+      <article class="card card-hover p-6 sm:p-7">
+        <svg class="h-6 w-6 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4" stroke-linecap="round"/><path d="M11 8v6M8 11h6" stroke-linecap="round"/>
+        </svg>
+        <h3 class="mt-5 text-lg font-semibold text-ice">AI Job Research</h3>
+        <p class="mt-3 text-sm leading-relaxed text-body">
+          Upload a <strong class="font-semibold text-ice">resume</strong> PDF to extract skills and seniority.
+          Autonomous agents then stream jobs in real time, verify that companies are real and hiring,
+          and dedupe cross-posted listings automatically before they hit your board.
+        </p>
+      </article>
+
+      <article class="card card-hover p-6 sm:p-7">
+        <div class="flex items-start justify-between gap-3">
+          <svg class="h-6 w-6 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 10v6"/>
+          </svg>
+          <span class="pill border-acc-cyan/40 text-acc-cyan">Coming soon</span>
+        </div>
+        <h3 class="mt-5 text-lg font-semibold text-ice">DSA Prep</h3>
+        <p class="mt-3 text-sm leading-relaxed text-body">
+          Share your <span class="font-medium text-ice">skills and target company + role</span>: AI finds the
+          <span class="font-medium text-ice">DSA problems those companies actually ask</span>.
+          Track every solution by topic and difficulty, and revisit on a spaced schedule.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS - timeline + visual per step ============ -->
+  <section id="how-it-works" class="mx-auto max-w-6xl px-8 py-20 sm:px-10 sm:py-24 xl:px-6">
+    <h2 class="max-w-2xl text-3xl font-bold tracking-tight text-ice sm:text-4xl">
+      Three steps from resume to offer.
+    </h2>
+    <p class="mt-5 max-w-2xl text-sm leading-relaxed text-body sm:text-base">
+      Your resume is the <span class="font-semibold text-ice">single source of truth</span> for the whole hunt.
+      From <span class="text-ice">skill extraction, match scoring, deduped discovery</span> to pipeline tracking, every part of Keystone is designed for <span class="font-semibold text-acc-cyan">complete signal integrity.</span>
+    </p>
+
+    <div class="relative mt-14">
+      <!-- vertical beam rail (desktop only) -->
+      <div class="pointer-events-none absolute bottom-8 left-[17px] top-2 hidden w-[2px] timeline-rail lg:block" aria-hidden="true"></div>
+
+      <ol class="space-y-16 lg:space-y-14">
+        <!-- Step 1 -->
+        <li class="relative grid min-w-0 items-start gap-8 lg:grid-cols-2 lg:gap-12">
+          <div class="relative lg:pl-14">
+            <span class="absolute left-0 top-0 hidden h-9 w-9 rotate-45 items-center justify-center rounded-[10px] border border-acc-cyan/50 bg-ink timeline-node lg:flex" aria-hidden="true">
+              <span class="-rotate-45 font-mono text-[11px] font-bold text-acc-cyan">01</span>
+            </span>
+            <h3 class="text-xl font-semibold text-ice">Upload resume</h3>
+            <p class="mt-3 text-sm leading-relaxed text-body">
+              Keystone parses your PDF and normalizes it against your profile, ensuring only
+              roles that fit your stack and seniority reach your board.
+            </p>
+            <p class="mt-4 text-sm leading-relaxed text-body">
+              Keystone also <span class="font-semibold text-ice">infers skills directly from your resume</span>,
+              so matching stays correct at both search time and review time.
+            </p>
+          </div>
+          <div class="card card-hover min-w-0 overflow-hidden lg:ml-2">
+            <div class="flex items-center gap-4 border-b border-edge px-5 py-3">
+              <span class="flex flex-none gap-1.5" aria-hidden="true">
+                <span class="h-2.5 w-2.5 rounded-full bg-danger/70"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-body/40"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-ok/70"></span>
+              </span>
+              <span class="min-w-0 flex-1 truncate rounded-md border border-edge bg-ink/60 px-3 py-1 text-center font-mono text-[11px] text-body/70">keystone.local/research · new</span>
+            </div>
+            <div class="p-5 sm:p-6">
+            <form action="#" onsubmit="return false" class="space-y-4" aria-label="Research form preview">
+              <div>
+                <span class="mb-2 block text-sm font-semibold text-ice">Skills / resume</span>
+                <div class="rounded-xl border border-edge bg-ink/60 transition-colors focus-within:border-acc-cyan">
+                  <div class="flex flex-wrap items-center gap-2 px-3 pt-2.5">
+                    <span class="pill !normal-case !tracking-normal">React</span>
+                    <span class="pill !normal-case !tracking-normal">TypeScript</span>
+                    <span class="min-w-[80px] flex-1 font-mono text-xs text-body/50">Node.js…</span>
+                  </div>
+                  <div class="mt-2.5 flex items-center justify-between gap-3 border-t border-edge px-3 py-2">
+                    <span class="truncate font-mono text-xs text-body/60">resume.pdf · attached</span>
+                    <span class="btn-secondary inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold">Upload resume</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <span class="mb-2 block text-sm font-semibold text-ice">Job types</span>
+                <div class="grid grid-cols-3 gap-2">
+                  <span class="rounded-xl border border-acc-cyan bg-acc-cyan px-2 py-2 text-center text-xs font-semibold text-ice shadow-[0_3px_12px_rgba(0,184,214,0.3)]">Remote</span>
+                  <span class="rounded-xl border border-acc-cyan bg-acc-cyan px-2 py-2 text-center text-xs font-semibold text-ice shadow-[0_3px_12px_rgba(0,184,214,0.3)]">Hybrid</span>
+                  <span class="rounded-xl border border-edge bg-ink/60 px-2 py-2 text-center text-xs font-semibold text-body">Onsite</span>
+                </div>
+              </div>
+
+              <div>
+                <span class="mb-2 block text-sm font-semibold text-ice">Countries</span>
+                <div class="flex flex-wrap items-center gap-2 rounded-xl border border-edge bg-ink/60 px-3 py-2.5">
+                  <span class="pill !normal-case !tracking-normal">Germany</span>
+                  <span class="pill !normal-case !tracking-normal">Netherlands</span>
+                  <span class="font-mono text-xs text-body/50">EU remote…</span>
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold">
+                Start job research
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0-5 5m5-5H6"/></svg>
+              </button>
+            </form>
+            </div>
+          </div>
+        </li>
+
+        <!-- Step 2 -->
+        <li class="relative grid min-w-0 items-start gap-8 lg:grid-cols-2 lg:gap-12">
+          <div class="relative lg:pl-14">
+            <span class="absolute left-0 top-0 hidden h-9 w-9 rotate-45 items-center justify-center rounded-[10px] border border-acc-cyan/50 bg-ink timeline-node lg:flex" aria-hidden="true">
+              <span class="-rotate-45 font-mono text-[11px] font-bold text-acc-cyan">02</span>
+            </span>
+            <h3 class="text-xl font-semibold text-ice">Start research</h3>
+            <p class="mt-3 text-sm leading-relaxed text-body">
+              Define roles, countries and skills. Agents run in the background, verify that
+              companies are real and hiring, and stream only new, deduped results.
+            </p>
+            <p class="mt-4 text-sm leading-relaxed text-body">
+              Every run is <span class="font-semibold text-ice">fully traceable</span>, thinking,
+              tool calls and matches stay in one transcript.
+            </p>
+          </div>
+          <div class="card card-hover min-w-0 overflow-hidden lg:ml-2">
+            <div class="flex items-center gap-4 border-b border-edge px-5 py-3">
+              <span class="flex flex-none gap-1.5" aria-hidden="true">
+                <span class="h-2.5 w-2.5 rounded-full bg-danger/70"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-body/40"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-ok/70"></span>
+              </span>
+              <span class="min-w-0 flex-1 truncate rounded-md border border-edge bg-ink/60 px-3 py-1 text-center font-mono text-[11px] text-body/70">keystone.local/research · running</span>
+            </div>
+            <div class="p-6">
+            <div class="flex items-center justify-between gap-4">
+              <p class="eyebrow text-body/70">Researching React jobs</p>
+              <span class="pill border-acc-cyan/30 text-acc-cyan"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Active</span>
+            </div>
+            <div class="mt-4">
+              <div class="flex items-end justify-between">
+                <span class="eyebrow text-body/70">Progress</span>
+                <span class="font-mono text-sm font-bold text-ice">68%</span>
+              </div>
+              <div class="mt-2 h-2 w-full overflow-hidden rounded-full border border-edge bg-ink"
+                   role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="Research progress">
+                <div class="progress-fill h-full rounded-full" style="width:68%"></div>
+              </div>
+            </div>
+            <div class="mt-4 space-y-2 font-mono text-xs leading-relaxed">
+              <p class="rounded-r-md border-l-2 border-ok/50 bg-ink/60 px-3 py-1.5 text-body/80">✓ scan job boards &amp; ATS feeds · done</p>
+              <p class="rounded-r-md border-l-2 border-acc-cyan/60 bg-ink/60 px-3 py-1.5 text-body/80">∴ verify company &amp; funding signals · active</p>
+              <p class="rounded-r-md border-l-2 border-edge bg-ink/60 px-3 py-1.5 text-body/60">· dedupe cross-posts · pending</p>
+            </div>
+            <div class="mt-4 grid grid-cols-3 gap-3">
+              <div class="rounded-xl border border-edge bg-ink/60 p-3">
+                <p class="font-mono text-lg font-bold text-ice">128</p>
+                <p class="eyebrow mt-1 text-body/70">Found</p>
+              </div>
+              <div class="rounded-xl border border-edge bg-ink/60 p-3">
+                <p class="font-mono text-lg font-bold text-ok">94</p>
+                <p class="eyebrow mt-1 text-body/70">Verified</p>
+              </div>
+              <div class="rounded-xl border border-edge bg-ink/60 p-3">
+                <p class="font-mono text-lg font-bold text-danger">34</p>
+                <p class="eyebrow mt-1 text-body/70">Dupes</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Step 3 -->
+        <li class="relative grid min-w-0 items-start gap-8 lg:grid-cols-2 lg:gap-12">
+          <div class="relative lg:pl-14">
+            <span class="absolute left-0 top-0 hidden h-9 w-9 rotate-45 items-center justify-center rounded-[10px] border border-acc-cyan/50 bg-ink timeline-node lg:flex" aria-hidden="true">
+              <span class="-rotate-45 font-mono text-[11px] font-bold text-acc-cyan">03</span>
+            </span>
+            <h3 class="text-xl font-semibold text-ice">Apply + track</h3>
+            <p class="mt-3 text-sm leading-relaxed text-body">
+              Apply from the card, update status in one click through Open → Applied → Interview → Offer,
+              with Rejected and Declined handled too. Filter by status, location and setup.
+            </p>
+            <p class="mt-4 text-sm leading-relaxed text-body">
+              Pipeline and conversion are <span class="font-semibold text-ice">summarized on your dashboard</span>,
+              not scattered across tabs and spreadsheets.
+            </p>
+          </div>
+          <div class="card card-hover min-w-0 overflow-hidden lg:ml-2">
+            <div class="flex items-center gap-4 border-b border-edge px-5 py-3">
+              <span class="flex flex-none gap-1.5" aria-hidden="true">
+                <span class="h-2.5 w-2.5 rounded-full bg-danger/70"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-body/40"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-ok/70"></span>
+              </span>
+              <span class="min-w-0 flex-1 truncate rounded-md border border-edge bg-ink/60 px-3 py-1 text-center font-mono text-[11px] text-body/70">keystone.local/dashboard</span>
+            </div>
+            <div class="p-6 sm:p-7">
+              <div class="flex items-center justify-between gap-4">
+                <p class="section-label text-acc-cyan">Conversion</p>
+                <span class="pill">all time</span>
+              </div>
+
+              <div class="mt-6 flex flex-wrap items-center gap-8">
+                <div class="relative h-36 w-36 flex-none">
+                  <svg class="h-36 w-36 -rotate-90" viewBox="0 0 120 120" role="img" aria-label="Donut chart: 41% applied, 13% interview, 18% offer rate">
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="#00212E" stroke-width="12"/>
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="#38BDF8" stroke-width="12"
+                            stroke-dasharray="128 314" stroke-linecap="butt"/>
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="#00B8D6" stroke-width="12"
+                            stroke-dasharray="41 314" stroke-dashoffset="-128" stroke-linecap="butt"/>
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="#10D9A0" stroke-width="12"
+                            stroke-dasharray="14 314" stroke-dashoffset="-169" stroke-linecap="butt"/>
+                  </svg>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <p class="font-mono text-2xl font-bold text-ice">41%</p>
+                    <p class="eyebrow mt-1 text-body/60">applied</p>
+                  </div>
+                </div>
+
+                <ul class="min-w-0 flex-1 space-y-3">
+                  <li class="flex items-center justify-between gap-4 border-b border-edge pb-3">
+                    <span class="flex items-center gap-2.5 text-sm text-ice"><span class="dot bg-info" aria-hidden="true"></span>Open → Applied</span>
+                    <span class="font-mono text-sm text-ice">41%</span>
+                  </li>
+                  <li class="flex items-center justify-between gap-4 border-b border-edge pb-3">
+                    <span class="flex items-center gap-2.5 text-sm text-ice"><span class="dot bg-acc-cyan" aria-hidden="true"></span>Applied → Interview</span>
+                    <span class="font-mono text-sm text-ice">13%</span>
+                  </li>
+                  <li class="flex items-center justify-between gap-4">
+                    <span class="flex items-center gap-2.5 text-sm text-ice"><span class="dot bg-ok" aria-hidden="true"></span>Interview → Offer</span>
+                    <span class="font-mono text-sm text-ok">18%</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section id="pricing" class="mx-auto max-w-6xl px-8 pb-20 sm:px-10 sm:pb-28 xl:px-6">
+    <div class="card relative overflow-hidden px-8 py-14 text-center sm:px-10 sm:py-20">
+      <div class="pointer-events-none absolute inset-0 hero-glow" aria-hidden="true"></div>
+
+      <div class="relative">
+        <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-ice sm:text-4xl">
+          Your pipeline deserves a keystone.
+        </h2>
+        <p class="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-body sm:text-base">
+          Free while self-hosted. Bring your own Postgres, point it at your boards, and let the
+          agents run.
+        </p>
+
+        <div class="mt-9 flex justify-center">
+          <a href="#" class="btn-primary rounded-xl px-7 py-3 text-sm font-semibold">Get started</a>
+        </div>
+
+        <p class="eyebrow mt-6 text-body/70">No credit card required</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-edge">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-8 py-8 text-center sm:px-10 md:flex-row md:justify-between md:gap-6 md:text-left xl:px-6">
+    <p class="text-sm font-semibold text-ice">Keystone <span class="font-normal text-body">· Track. Discover. Ace.</span></p>
+    <p class="eyebrow text-body/70">Built for engineers hunting smarter</p>
+  </div>
+</footer>
+
+</body>
+</html>

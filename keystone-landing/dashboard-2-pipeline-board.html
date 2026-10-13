@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keystone — Pipeline Board</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-ink:        #020B14;
+    --color-card:       #031019;
+    --color-edge:       #00212E;
+    --color-ice:        #C9F2FF;
+    --color-body:       #7AB5C6;
+    --color-acc-cyan:   #00B8D6;
+    --color-ok:         #10D9A0;
+    --color-info:       #38BDF8;
+    --color-danger:     #FB7185;
+
+    --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-mono:    "Space Mono", ui-monospace, monospace;
+  }
+</style>
+
+<style>
+  html { background-color:#020B14; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  .section-label {
+    font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:13px;
+    letter-spacing:.12em; text-transform:uppercase; line-height:1;
+    display:flex; align-items:center; gap:.75rem;
+  }
+  .section-label::before { content:""; width:1.5rem; height:2px; background:#00B8D6; flex:none; }
+
+  .eyebrow {
+    font-family:"Space Mono",monospace; text-transform:uppercase;
+    letter-spacing:.14em; font-size:11px; line-height:1.4;
+  }
+
+  .card { background:#031019; border:1px solid #00212E; border-radius:20px; }
+
+  .job-card {
+    background:rgba(2,11,20,.65); border:1px solid #00212E; border-radius:16px;
+    transition: border-color .25s ease;
+  }
+  .job-card:hover { border-color: rgba(0,184,214,.5); }
+
+  .btn-primary { background:#00B8D6; color:#02131C; border:1px solid #00B8D6; transition: background-color .2s ease; }
+  .btn-primary:hover { background:#33C7DE; }
+
+  .btn-secondary {
+    border:1px solid #00394C; color:#C9F2FF; background:rgba(3,16,25,.6);
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .btn-secondary:hover { border-color:#00B8D6; background:rgba(0,184,214,.08); }
+
+  .pill {
+    display:inline-flex; align-items:center; gap:.5rem; border-radius:8px;
+    border:1px solid #00212E; background:rgba(2,11,20,.75); padding:.3rem .6rem;
+    font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:#7AB5C6; white-space:nowrap;
+  }
+  .dot { width:6px; height:6px; border-radius:9999px; flex:none; }
+
+  .col-head { border-top:2px solid #00212E; }
+  .col-saved    { border-top-color:#7AB5C6; }
+  .col-applied  { border-top-color:#38BDF8; }
+  .col-intv     { border-top-color:#00B8D6; }
+  .col-offer    { border-top-color:#10D9A0; }
+
+  .pulse-dot { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+  @media (prefers-reduced-motion: reduce){ .pulse-dot{animation:none} }
+
+  ::selection { background: rgba(0,184,214,.3); color:#EAFBFF; }
+  :focus-visible { outline:2px solid #00B8D6; outline-offset:2px; border-radius:6px; }
+</style>
+</head>
+
+<body class="bg-ink font-display text-body">
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-50 border-b border-edge bg-ink/80 backdrop-blur-xl">
+  <nav class="mx-auto flex h-16 max-w-[1600px] items-center gap-6 px-5 sm:px-8" aria-label="Main">
+    <a href="#" class="flex items-center gap-3">
+      <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-acc-cyan/30 bg-acc-cyan/10">
+        <svg class="h-4 w-4 text-acc-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" role="img" aria-label="Keystone"><path d="M12 5v14M5 12h14"/></svg>
+      </span>
+      <span class="text-lg font-semibold tracking-tight text-ice">Keystone</span>
+    </a>
+
+    <div class="hidden items-center gap-7 md:flex">
+      <a href="#" class="text-sm text-body hover:text-ice">Overview</a>
+      <a href="#" class="text-sm font-semibold text-ice">Pipeline</a>
+      <a href="#" class="text-sm text-body hover:text-ice">Research</a>
+      <a href="#" class="text-sm text-body hover:text-ice">Resume</a>
+    </div>
+
+    <div class="ml-auto flex items-center gap-3">
+      <span class="pill border-ok/30 text-ok"><span class="dot bg-ok pulse-dot" aria-hidden="true"></span>2 agents live</span>
+      <a href="#" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">Add job</a>
+      <span class="flex h-9 w-9 items-center justify-center rounded-full border border-edge bg-card font-mono text-[11px] text-ice">AR</span>
+    </div>
+  </nav>
+</header>
+
+<main class="mx-auto max-w-[1600px] px-5 py-8 sm:px-8">
+
+  <!-- ============ HEADER + STATS STRIP ============ -->
+  <section aria-label="Pipeline summary">
+    <div class="flex flex-wrap items-end justify-between gap-5">
+      <div>
+        <p class="section-label text-acc-cyan">Pipeline board</p>
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-ice sm:text-4xl">214 roles in play</h1>
+        <p class="mt-3 text-sm text-body">Drag a card to move a role forward. Every stage change is logged.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="btn-secondary rounded-xl px-4 py-2 font-mono text-xs uppercase tracking-wider">Filters</button>
+        <button class="btn-secondary rounded-xl px-4 py-2 font-mono text-xs uppercase tracking-wider">Group: stage</button>
+        <button class="btn-secondary rounded-xl px-4 py-2 font-mono text-xs uppercase tracking-wider">Last 30d</button>
+      </div>
+    </div>
+
+    <div class="card mt-7 grid divide-y divide-edge sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-5 lg:divide-x">
+      <div class="p-6">
+        <p class="eyebrow text-body/60">Discovered</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ice">1,284</p>
+        <p class="mt-2 font-mono text-[11px] text-body/60">+128 this week</p>
+      </div>
+      <div class="p-6">
+        <p class="eyebrow text-body/60">Dupes removed</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-danger">341</p>
+        <p class="mt-2 font-mono text-[11px] text-body/60">26.5% of feed</p>
+      </div>
+      <div class="p-6">
+        <p class="eyebrow text-body/60">Apply rate</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ice">41%</p>
+        <div class="mt-3 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:41%"></div></div>
+      </div>
+      <div class="p-6">
+        <p class="eyebrow text-body/60">Interview rate</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ice">13%</p>
+        <div class="mt-3 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:13%"></div></div>
+      </div>
+      <div class="p-6">
+        <p class="eyebrow text-body/60">Offers</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ok">2</p>
+        <p class="mt-2 font-mono text-[11px] text-ok">1 pending decision</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOARD ============ -->
+  <section class="mt-8 grid gap-5 lg:grid-cols-4" aria-label="Kanban board">
+
+    <!-- SAVED -->
+    <div class="card col-head col-saved p-4">
+      <div class="flex items-center justify-between gap-3 px-1">
+        <h2 class="flex items-center gap-2 text-sm font-semibold text-ice">
+          <span class="dot bg-body/70" aria-hidden="true"></span>Saved
+        </h2>
+        <span class="font-mono text-xs text-body/70">114</span>
+      </div>
+      <p class="mt-2 px-1 font-mono text-[10px] uppercase tracking-wider text-body/50">awaiting triage</p>
+
+      <div class="mt-4 space-y-3">
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Shopify</p>
+            <span class="font-mono text-[10px] text-body/50">92%</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Staff Frontend Engineer</p>
+          <p class="mt-2 font-mono text-[11px] text-body">$180k – $220k</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="pill"><span class="dot bg-info" aria-hidden="true"></span>Remote</span>
+            <span class="pill">React</span>
+          </div>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Figma</p>
+            <span class="font-mono text-[10px] text-body/50">88%</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Product Engineer, Canvas</p>
+          <p class="mt-2 font-mono text-[11px] text-body">$170k – $205k</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="pill">Hybrid · LDN</span>
+            <span class="pill">TypeScript</span>
+          </div>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Stripe</p>
+            <span class="font-mono text-[10px] text-body/50">84%</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Frontend Engineer, Checkout</p>
+          <p class="mt-2 font-mono text-[11px] text-body">$165k – $200k</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="pill"><span class="dot bg-ok" aria-hidden="true"></span>Visa</span>
+            <span class="pill">Remote · EU</span>
+          </div>
+        </article>
+
+        <button class="btn-secondary w-full rounded-xl py-2.5 font-mono text-[11px] uppercase tracking-wider">Show 111 more</button>
+      </div>
+    </div>
+
+    <!-- APPLIED -->
+    <div class="card col-head col-applied p-4">
+      <div class="flex items-center justify-between gap-3 px-1">
+        <h2 class="flex items-center gap-2 text-sm font-semibold text-ice">
+          <span class="dot bg-info" aria-hidden="true"></span>Applied
+        </h2>
+        <span class="font-mono text-xs text-body/70">87</span>
+      </div>
+      <p class="mt-2 px-1 font-mono text-[10px] uppercase tracking-wider text-body/50">median reply 4.1d</p>
+
+      <div class="mt-4 space-y-3">
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Raycast</p>
+            <span class="pill border-info/30 text-info">3d</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Frontend Engineer</p>
+          <p class="mt-2 font-mono text-[11px] text-body">$155k – $190k</p>
+          <div class="mt-3 h-1 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:35%"></div></div>
+          <p class="mt-2 font-mono text-[10px] text-body/60">recruiter call pending</p>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Notion</p>
+            <span class="pill border-info/30 text-info">6d</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Senior Web Engineer</p>
+          <p class="mt-2 font-mono text-[11px] text-body">$175k – $215k</p>
+          <div class="mt-3 h-1 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-info" style="width:55%"></div></div>
+          <p class="mt-2 font-mono text-[10px] text-body/60">take-home sent</p>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Cloudflare</p>
+            <span class="pill border-danger/30 text-danger">11d</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Systems Engineer, Workers</p>
+          <p class="mt-2 font-mono text-[11px] text-body">$160k – $195k</p>
+          <div class="mt-3 h-1 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-danger/70" style="width:20%"></div></div>
+          <p class="mt-2 font-mono text-[10px] text-danger/80">follow-up overdue</p>
+        </article>
+
+        <button class="btn-secondary w-full rounded-xl py-2.5 font-mono text-[11px] uppercase tracking-wider">Show 84 more</button>
+      </div>
+    </div>
+
+    <!-- INTERVIEW -->
+    <div class="card col-head col-intv p-4">
+      <div class="flex items-center justify-between gap-3 px-1">
+        <h2 class="flex items-center gap-2 text-sm font-semibold text-ice">
+          <span class="dot bg-acc-cyan" aria-hidden="true"></span>Interview
+        </h2>
+        <span class="font-mono text-xs text-body/70">11</span>
+      </div>
+      <p class="mt-2 px-1 font-mono text-[10px] uppercase tracking-wider text-body/50">4 scheduled this week</p>
+
+      <div class="mt-4 space-y-3">
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Linear</p>
+            <span class="pill border-acc-cyan/30 text-acc-cyan">R2</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Product Engineer, Editor</p>
+          <p class="mt-2 font-mono text-[11px] text-ice">Thu 10:30 · Pairing</p>
+          <div class="mt-3 flex gap-1.5" aria-hidden="true">
+            <span class="h-1.5 flex-1 rounded-full bg-acc-cyan"></span>
+            <span class="h-1.5 flex-1 rounded-full bg-acc-cyan"></span>
+            <span class="h-1.5 flex-1 rounded-full bg-ink"></span>
+            <span class="h-1.5 flex-1 rounded-full bg-ink"></span>
+          </div>
+          <p class="mt-2 font-mono text-[10px] text-body/60">round 2 of 4</p>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Supabase</p>
+            <span class="pill border-acc-cyan/30 text-acc-cyan">R1</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Full-stack Engineer</p>
+          <p class="mt-2 font-mono text-[11px] text-ice">Fri 16:00 · Screen</p>
+          <div class="mt-3 flex gap-1.5" aria-hidden="true">
+            <span class="h-1.5 flex-1 rounded-full bg-acc-cyan"></span>
+            <span class="h-1.5 flex-1 rounded-full bg-ink"></span>
+            <span class="h-1.5 flex-1 rounded-full bg-ink"></span>
+          </div>
+          <p class="mt-2 font-mono text-[10px] text-body/60">round 1 of 3</p>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Datadog</p>
+            <span class="pill">Prep</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Frontend Engineer, Metrics</p>
+          <p class="mt-2 font-mono text-[11px] text-body">DSA set · 12 / 20 done</p>
+          <div class="mt-3 h-1 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-acc-cyan" style="width:60%"></div></div>
+        </article>
+
+        <button class="btn-secondary w-full rounded-xl py-2.5 font-mono text-[11px] uppercase tracking-wider">Show 8 more</button>
+      </div>
+    </div>
+
+    <!-- OFFER -->
+    <div class="card col-head col-offer p-4">
+      <div class="flex items-center justify-between gap-3 px-1">
+        <h2 class="flex items-center gap-2 text-sm font-semibold text-ice">
+          <span class="dot bg-ok" aria-hidden="true"></span>Offer
+        </h2>
+        <span class="font-mono text-xs text-ok">2</span>
+      </div>
+      <p class="mt-2 px-1 font-mono text-[10px] uppercase tracking-wider text-body/50">decide by Mar 24</p>
+
+      <div class="mt-4 space-y-3">
+        <article class="job-card border-ok/30 p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Vercel</p>
+            <span class="pill border-ok/30 text-ok"><span class="dot bg-ok" aria-hidden="true"></span>New</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Sr. Frontend Engineer, React Core</p>
+          <p class="mt-3 font-mono text-lg font-bold text-ok">$198,000</p>
+          <p class="mt-1 font-mono text-[11px] text-body">+ 0.08% equity · remote EU</p>
+          <div class="mt-4 flex gap-2">
+            <button class="btn-primary flex-1 rounded-xl py-2 text-xs font-semibold">Accept</button>
+            <button class="btn-secondary flex-1 rounded-xl py-2 text-xs font-semibold">Negotiate</button>
+          </div>
+        </article>
+
+        <article class="job-card p-4">
+          <div class="flex items-start justify-between gap-3">
+            <p class="text-sm font-bold text-ice">Railway</p>
+            <span class="pill">Verbal</span>
+          </div>
+          <p class="mt-1 text-xs font-semibold text-acc-cyan">Platform Engineer</p>
+          <p class="mt-3 font-mono text-lg font-bold text-ice">$172,000</p>
+          <p class="mt-1 font-mono text-[11px] text-body">written offer pending</p>
+        </article>
+
+        <div class="rounded-2xl border border-edge bg-ink/60 p-4">
+          <p class="eyebrow text-body/60">Best offer vs. target</p>
+          <div class="mt-3 h-1.5 w-full rounded-full bg-ink"><div class="h-full rounded-full bg-ok" style="width:99%"></div></div>
+          <p class="mt-2 font-mono text-[11px] text-ok">99% of $200k target</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ STAGE CONVERSION FOOTER ============ -->
+  <section class="card mt-8 p-6" aria-label="Stage conversion">
+    <div class="flex flex-wrap items-baseline justify-between gap-4">
+      <p class="section-label text-acc-cyan">Stage conversion</p>
+      <p class="font-mono text-xs text-body/70">based on 214 tracked roles</p>
+    </div>
+
+    <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-edge bg-ink/60 p-5">
+        <p class="eyebrow text-body/60">Saved → Applied</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ice">41%</p>
+        <p class="mt-2 font-mono text-[11px] text-body/60">87 of 214</p>
+      </div>
+      <div class="rounded-2xl border border-edge bg-ink/60 p-5">
+        <p class="eyebrow text-body/60">Applied → Interview</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ice">13%</p>
+        <p class="mt-2 font-mono text-[11px] text-body/60">11 of 87</p>
+      </div>
+      <div class="rounded-2xl border border-edge bg-ink/60 p-5">
+        <p class="eyebrow text-body/60">Interview → Offer</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ok">18%</p>
+        <p class="mt-2 font-mono text-[11px] text-body/60">2 of 11</p>
+      </div>
+      <div class="rounded-2xl border border-edge bg-ink/60 p-5">
+        <p class="eyebrow text-body/60">Avg. cycle length</p>
+        <p class="mt-3 font-mono text-2xl font-bold text-ice">23d</p>
+        <p class="mt-2 font-mono text-[11px] text-body/60">apply → offer</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
