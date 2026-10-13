@@ -34,6 +34,8 @@ i DESIGN TOKENS
   --r-sm: 6px;
   --r-md: 12px;
   --r-lg: 20px;
+  --r-squircle: 18px;
+  --r-squircle-sm: 12px;
 
   --sp-section: clamp(72px, 10vw, 140px);
 }
@@ -136,7 +138,8 @@ section{ padding:var(--sp-section) 0; }
   text-transform:uppercase;
   color:var(--green);
   background:var(--green-tint);
-  border-radius:999px;
+  border-radius:var(--r-squircle-sm);
+  corner-shape:squircle;
   padding:5px 12px;
 }
 .ph .ph-label{
@@ -183,7 +186,8 @@ section{ padding:var(--sp-section) 0; }
   font-weight:600;
   letter-spacing:0.01em;
   padding:17px 32px;
-  border-radius:999px;
+  border-radius:var(--r-squircle);
+  corner-shape:squircle;
   border:1px solid transparent;
   cursor:pointer;
   transition:transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
@@ -283,7 +287,8 @@ section{ padding:var(--sp-section) 0; }
   font-size:11.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
   color:var(--green-dk);
   background:var(--green-tint);
-  border-radius:999px;
+  border-radius:var(--r-squircle-sm);
+  corner-shape:squircle;
   padding:7px 14px;
 }
 .hero-stage{
@@ -478,7 +483,8 @@ i CARD GRIDS
   position:absolute; top:12px; left:12px; z-index:3;
   font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
   background:rgba(31,35,33,.86); color:#fff;
-  padding:5px 11px; border-radius:999px;
+  padding:5px 11px; border-radius:var(--r-squircle-sm);
+  corner-shape:squircle;
 }
 .ba-tag.after{ background:var(--green); }
 .result-foot{
@@ -489,7 +495,8 @@ i CARD GRIDS
 .result-foot span{
   font-size:11.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
   color:var(--green-dk); background:var(--green-tint);
-  padding:6px 12px; border-radius:999px;
+  padding:6px 12px; border-radius:var(--r-squircle-sm);
+  corner-shape:squircle;
 }
 
 .video-grid{
@@ -559,7 +566,8 @@ i CARD GRIDS
   margin-top:44px;
   display:inline-flex; align-items:center; gap:12px;
   background:var(--green-tint);
-  border-radius:999px;
+  border-radius:var(--r-squircle);
+  corner-shape:squircle;
   padding:13px 24px;
   font-size:14px; font-weight:500; color:var(--green-dk);
 }
@@ -648,8 +656,8 @@ i CARD GRIDS
 }
 @media (max-width:900px){ .final-grid{ grid-template-columns:1fr; } }
 .final h2{ margin:26px 0 16px; }
-.final .sub{ font-size:clamp(1rem,1.6vw,1.2rem); color:var(--ink-soft); margin-bottom:36px; }
-.final-meta{ margin-top:22px; }
+.final .sub{ font-size:clamp(1rem,1.6vw,1.2rem); color:var(--ink-soft); margin-bottom:14px; }
+.final-meta{ margin:0 0 22px; }
 
 /* ============================================================
    FOOTER
@@ -765,7 +773,7 @@ i CARD GRIDS
       <div class="divider" style="margin-top:20px"></div>
       <p class="lead">
         Natgenic is a concentrated hair oil formulated to support healthier-looking,
-        stronger hair &mdash; and to help address concerns around hair fall, thinning
+        stronger hair and to help address concerns around hair fall, thinning
         and genetic hair loss.
       </p>
 
@@ -885,7 +893,7 @@ i actual Natgenic bottle</span>
         </li>
         <li>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          <span>Built to fit into a consistent routine &mdash; not positioned as an instant miracle solution.</span>
+          <span>Built to fit into a consistent routine, not positioned as an instant miracle solution.</span>
         </li>
         <li>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -994,7 +1002,7 @@ i angled / clinical product shot</span>
       <p class="lead">
         Hair changes slowly. The 60-Day Challenge is simple: use Natgenic
         consistently for two months, follow the routine, and let your own progress
-        be the measure &mdash; not a promise made on a website.
+        be the measure, not a promise made on a website.
       </p>
     </div>
 
@@ -1062,7 +1070,7 @@ i angled / clinical product shot</span>
       <h2 class="h-lg">Real People. Real Progress.</h2>
       <div class="divider" style="margin-top:28px"></div>
       <p class="lead">
-        Don&rsquo;t just take our word for it. See the results &mdash; shared by real
+        Don&rsquo;t just take our word for it. See the results shared by real
         customers who followed the routine consistently.
       </p>
     </div>
@@ -1079,7 +1087,7 @@ i angled / clinical product shot</span>
 i BEFORE photo. Authentic, unretouched. -->
             <div class="ph ph--portrait">
               <span class="ph-id">IMG-BA-1-BEFORE</span>
-              <span class="ph-label">Customer 1 &mdash; before</span>
+              <span class="ph-label">Customer 1: before</span>
               <span class="ph-hint">Same angle &amp; lighting as the after shot. 3:4</span>
             </div>
           </div>
@@ -1089,7 +1097,7 @@ i BEFORE photo. Authentic, unretouched. -->
 i AFTER photo (Day 60). Authentic, unretouched. -->
             <div class="ph ph--portrait">
               <span class="ph-id">IMG-BA-1-AFTER</span>
-              <span class="ph-label">Customer 1 &mdash; after</span>
+              <span class="ph-label">Customer 1: after</span>
               <span class="ph-hint">Day 60. Keep authentic, minimal editing. 3:4</span>
             </div>
           </div>
@@ -1109,7 +1117,7 @@ i AFTER photo (Day 60). Authentic, unretouched. -->
 i BEFORE photo. -->
             <div class="ph ph--portrait">
               <span class="ph-id">IMG-BA-2-BEFORE</span>
-              <span class="ph-label">Customer 2 &mdash; before</span>
+              <span class="ph-label">Customer 2: before</span>
               <span class="ph-hint">3:4 portrait</span>
             </div>
           </div>
@@ -1119,7 +1127,7 @@ i BEFORE photo. -->
 i AFTER photo. -->
             <div class="ph ph--portrait">
               <span class="ph-id">IMG-BA-2-AFTER</span>
-              <span class="ph-label">Customer 2 &mdash; after</span>
+              <span class="ph-label">Customer 2: after</span>
               <span class="ph-hint">3:4 portrait</span>
             </div>
           </div>
@@ -1139,7 +1147,7 @@ i AFTER photo. -->
 i BEFORE photo. -->
             <div class="ph ph--portrait">
               <span class="ph-id">IMG-BA-3-BEFORE</span>
-              <span class="ph-label">Customer 3 &mdash; before</span>
+              <span class="ph-label">Customer 3: before</span>
               <span class="ph-hint">3:4 portrait</span>
             </div>
           </div>
@@ -1149,7 +1157,7 @@ i BEFORE photo. -->
 i AFTER photo. -->
             <div class="ph ph--portrait">
               <span class="ph-id">IMG-BA-3-AFTER</span>
-              <span class="ph-label">Customer 3 &mdash; after</span>
+              <span class="ph-label">Customer 3: after</span>
               <span class="ph-hint">3:4 portrait</span>
             </div>
           </div>
@@ -1229,19 +1237,19 @@ i AFTER photo. -->
     <div class="steps">
 
       <div class="step reveal">
-        <p class="step-num">01 &mdash; APPLY</p>
+        <p class="step-num">01: APPLY</p>
         <h3>Apply</h3>
         <p>Apply the recommended amount of Natgenic to the scalp and hair.</p>
       </div>
 
       <div class="step reveal">
-        <p class="step-num">02 &mdash; MASSAGE</p>
+        <p class="step-num">02: MASSAGE</p>
         <h3>Massage</h3>
         <p>Gently massage into the scalp to distribute the oil evenly.</p>
       </div>
 
       <div class="step reveal">
-        <p class="step-num">03 &mdash; STAY CONSISTENT</p>
+        <p class="step-num">03: STAY CONSISTENT</p>
         <h3>Stay Consistent</h3>
         <p>Follow the recommended routine consistently and give your hair time.</p>
       </div>
@@ -1271,7 +1279,7 @@ i hero-quality studio photograph of the
            Natgenic bottle. Clean background, high contrast, premium lighting. -->
       <div class="ph ph--tall">
         <span class="ph-id">IMG-PRODUCT-MAIN</span>
-        <span class="ph-label">Natgenic bottle &mdash; main product shot</span>
+        <span class="ph-label">Natgenic bottle: main product shot</span>
         <span class="ph-hint">Studio quality, clean background, soft shadow. Portrait 4:5 
  ~1400&times;1750px</span>
       </div>
@@ -1306,7 +1314,7 @@ i bottle in hand / in use -->
 
       <p class="lead">
         A concentrated natural hair oil intended for people dealing with hair fall,
-        thinning hair and genetic hair loss &mdash; made to be used as part of a
+        thinning hair and genetic hair loss. It is made to be used as part of a
         consistent, long-term hair-care routine rather than a one-time treatment.
       </p>
 
@@ -1366,7 +1374,7 @@ i bottle in hand / in use -->
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            Yes &mdash; Natgenic is designed with genetic hair thinning in mind. It is
+            Yes, Natgenic is designed with genetic hair thinning in mind. It is
             a hair-care product, not a medical treatment, so it is intended to support
             your hair-care routine rather than replace professional medical advice. If
             your hair loss is sudden, patchy or accompanied by other symptoms, we
@@ -1411,7 +1419,7 @@ i bottle in hand / in use -->
         <div class="faq-a">
           <div class="faq-a-inner">
             This website is not an online store. Natgenic is sold directly through our
-            Instagram page &mdash; message us there and we&rsquo;ll help you place your
+            Instagram page. Message us there and we&rsquo;ll help you place your
             order. 60 ml &middot; &#8377;600.
           </div>
         </div>
@@ -1424,7 +1432,7 @@ i bottle in hand / in use -->
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            Yes &mdash; we ship across India. For delivery timelines and shipping
+            Yes, we ship across India. For delivery timelines and shipping
             charges for your location, message us on Instagram before placing your
             order.
           </div>
@@ -1452,12 +1460,12 @@ i bottle in hand / in use -->
       <h2 class="h-xl">Your Hair Deserves Consistency.</h2>
       <p class="sub">Start your Natgenic routine today.</p>
 
+      <p class="price-note final-meta">60 ml &middot; &#8377;600</p>
+
       <a class="btn btn-primary btn-lg"
          href="https://www.instagram.com/natgenic" target="_blank" rel="noopener">
         Purchase on Instagram <span class="arw">&rarr;</span>
       </a>
-
-      <p class="price-note final-meta">60 ml &middot; &#8377;600</p>
     </div>
 
     <div class="reveal">
@@ -1466,7 +1474,7 @@ i clean image of the Natgenic bottle.
            Can be a different angle from the hero shot. -->
       <div class="ph ph--wide">
         <span class="ph-id">IMG-FINAL-BOTTLE</span>
-        <span class="ph-label">Closing product image &mdash; Natgenic bottle</span>
+        <span class="ph-label">Closing product image: Natgenic bottle</span>
         <span class="ph-hint">Clean background, premium lighting. Landscape 16:10</span>
       </div>
     </div>
