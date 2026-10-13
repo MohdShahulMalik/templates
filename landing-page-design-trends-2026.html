@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emerging Landing Page Design Styles — 2026 Research (Novel Sites Only)</title>
+<meta name="description" content="45 non-mainstream, human-crafted landing page designs and 11 emerging styles to watch in 2026. Sanitized: novel sites only.">
+<style>
+  :root{
+    --bg:#08090A;
+    --bg-elev:#0E1012;
+    --bg-card:#101316;
+    --line:#1D2125;
+    --line-soft:#15181B;
+    --txt:#E7ECEF;
+    --txt-dim:#9AA4AD;
+    --txt-faint:#636D76;
+    --accent:#6EE7F9;
+    --accent-2:#A78BFA;
+    --accent-3:#2EE6A8;
+    --radius:16px;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--txt);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* ---------- grain + aurora ---------- */
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:9999;pointer-events:none;
+    opacity:.035;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  }
+  .aurora{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .aurora span{position:absolute;border-radius:50%;filter:blur(110px);opacity:.18}
+  .aurora span:nth-child(1){width:620px;height:620px;top:-220px;left:-120px;background:var(--accent)}
+  .aurora span:nth-child(2){width:520px;height:520px;top:-80px;right:-160px;background:var(--accent-2)}
+  .aurora span:nth-child(3){width:460px;height:460px;top:52%;left:40%;background:var(--accent-3);opacity:.08}
+
+  /* ---------- progress + nav ---------- */
+  #progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));}
+  nav{
+    position:sticky;top:0;z-index:60;
+    backdrop-filter:blur(14px);
+    background:rgba(8,9,10,.72);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .brand{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt);
+    display:flex;align-items:center;gap:9px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  .nav-links{display:flex;gap:20px;margin-left:auto;flex-wrap:wrap}
+  .nav-links a{font-size:13px;color:var(--txt-dim);text-decoration:none;transition:color .2s}
+  .nav-links a:hover{color:var(--accent)}
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:88px 0 0}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:120px 0 24px}
+  h1{
+    font-size:clamp(2.6rem,7.5vw,5.4rem);
+    line-height:1.02;letter-spacing:-.035em;margin:0 0 26px;font-weight:700;
+    background:linear-gradient(180deg,#fff 10%,#8E99A3 130%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{max-width:760px;font-size:1.08rem;color:var(--txt-dim)}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin:38px 0 0}
+  .stat{border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;background:var(--bg-card);min-width:132px}
+  .stat b{display:block;font-size:1.8rem;line-height:1.1;letter-spacing:-.02em}
+  .stat span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt-faint)}
+
+  /* ---------- callout ---------- */
+  .callout{
+    margin:54px 0 0;padding:24px 26px;border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(110,231,249,.05),rgba(167,139,250,.03));
+    border:1px solid var(--line);border-left:2px solid var(--accent);
+  }
+  .callout p{margin:0 0 10px}
+  .callout p:last-child{margin-bottom:0}
+  .callout ul{margin:10px 0 0;padding-left:18px;color:var(--txt-dim)}
+  .callout li{margin-bottom:8px}
+  .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-faint)}
+
+  /* ---------- headings ---------- */
+  h2{font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-.025em;margin:0 0 10px;font-weight:650}
+  h3.group{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--txt-faint);margin:54px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--line-soft);font-weight:500;
+  }
+  .sec-sub{color:var(--txt-dim);max-width:780px;margin:0 0 6px}
+
+  /* ---------- bento ---------- */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}
+  .tile{
+    position:relative;overflow:hidden;
+    background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 24px 24px;transition:transform .25s ease,border-color .25s,background .25s;
+  }
+  .tile:hover{transform:translateY(-4px);border-color:#2C333A;background:#12161A}
+  .tile .num{
+    position:absolute;top:-6px;right:12px;font-size:5.4rem;font-weight:800;line-height:1;
+    color:#fff;opacity:.035;letter-spacing:-.05em;
+  }
+  .tile h4{margin:0 0 10px;font-size:1.12rem;letter-spacing:-.015em}
+  .tile p{margin:0 0 12px;font-size:.93rem;color:var(--txt-dim)}
+  .tile .pot{font-size:.88rem;color:var(--txt-dim);border-top:1px dashed var(--line);padding-top:12px;margin:0}
+  .tile .pot b{color:var(--accent-3);font-weight:600;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .tile.wide{grid-column:span 2}
+
+  /* ---------- site cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .card{
+    position:relative;background:var(--bg-card);border:1px solid var(--line);
+    border-left:2px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;transition:border-color .25s,transform .25s,background .25s;
+  }
+  .card:hover{border-color:#2C333A;border-left-color:var(--accent);transform:translateY(-3px);background:#12161A}
+  .card-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .idx{font-family:var(--mono);font-size:11px;color:var(--txt-faint);min-width:22px}
+  .card h4{margin:0;font-size:1.1rem;letter-spacing:-.015em}
+  .card a.url{font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;
+    border-bottom:1px solid transparent;transition:border-color .2s}
+  .card a.url:hover{border-bottom-color:var(--accent)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 12px}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--txt-dim);background:#0C0F11}
+  .chip.cat{border-color:rgba(167,139,250,.35);color:#C7B6FF;background:rgba(167,139,250,.07)}
+  .card p{margin:0;font-size:.94rem;color:var(--txt-dim)}
+  .card p b{color:var(--txt);font-weight:600}
+
+  /* ---------- shortlisted ---------- */
+  .card.shortlisted{
+    border-color:rgba(110,231,249,.4);
+    border-left-color:var(--accent);
+    background:linear-gradient(180deg,rgba(110,231,249,.05),rgba(110,231,249,.015)),var(--bg-card);
+    box-shadow:0 0 34px -14px rgba(110,231,249,.35);
+  }
+  .card.shortlisted:hover{border-color:rgba(110,231,249,.6);border-left-color:var(--accent);background:linear-gradient(180deg,rgba(110,231,249,.07),rgba(110,231,249,.02)),#12161A}
+  .chip.star{
+    border-color:rgba(110,231,249,.5);color:var(--accent);
+    background:rgba(110,231,249,.08);
+    box-shadow:0 0 12px -4px rgba(110,231,249,.5);
+  }
+  .shortlist-note{
+    margin:18px 0 0;padding:14px 18px;border-radius:12px;
+    border:1px dashed rgba(110,231,249,.35);
+    background:rgba(110,231,249,.04);
+    font-size:.9rem;color:var(--txt-dim);
+  }
+  .shortlist-note b{color:var(--accent);font-weight:600}
+
+  /* ---------- how to use ---------- */
+  .howto{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+  .howto .tile h4{color:var(--accent)}
+
+  footer{margin-top:96px;border-top:1px solid var(--line-soft);padding:34px 0 72px}
+  footer p{margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--txt-faint)}
+
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+
+  @media (max-width:980px){
+    .bento,.howto{grid-template-columns:repeat(2,1fr)}
+    .tile.wide{grid-column:span 2}
+  }
+  @media (max-width:720px){
+    .bento,.howto,.cards{grid-template-columns:1fr}
+    .tile.wide{grid-column:span 1}
+    header.hero{padding:76px 0 10px}
+    section{padding:66px 0 0}
+    .nav-links{width:100%;margin-left:0;gap:14px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .rv{opacity:1;transform:none;transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="aurora"><span></span><span></span><span></span></div>
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> Design Trends&nbsp;/&nbsp;2026&nbsp;/&nbsp;v2.1</div>
+    <div class="nav-links">
+      <a href="#styles">11 Styles</a>
+      <a href="#dual">Light + Dark</a>
+      <a href="#dark">Dark Only</a>
+      <a href="#howto">How to use</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <p class="eyebrow">Research compiled October 2026 · v2.1 sanitized + shortlist</p>
+  <h1>Emerging creative<br>landing page styles<br><em>before they go mainstream.</em></h1>
+  <p class="lede">Human-crafted design styles for landing pages that are <b>not</b> yet mainstream but show strong trend potential. &ldquo;Non-AI&rdquo; here means: not the generic AI-slop look — purple gradient + glassmorphism + the identical Inter hero. Every site below was chosen for a distinctive, steal-worthy design idea.</p>
+
+  <div class="stats">
+    <div class="stat"><b>11</b><span>Styles to watch</span></div>
+    <div class="stat"><b>22</b><span>Light + dark</span></div>
+    <div class="stat"><b>23</b><span>Dark-mode only</span></div>
+    <div class="stat"><b>45</b><span>Total pages</span></div>
+  </div>
+
+  <div class="callout rv">
+    <p class="lbl">Sanitization policy — v2</p>
+    <p style="color:var(--txt-dim)">Every mainstream site and every mainstream product&rsquo;s site was removed — no Tailwind, Astro, Nuxt, Svelte, Bun, Deno, Vercel, Supabase, Linear, Cursor, Resend, Stripe, Figma, Notion, OpenAI/Anthropic, Midjourney, Runway, Solana, Raycast, shadcn, Mintlify, Cal.com, Clerk, Railway, etc.</p>
+    <p style="color:var(--txt-dim)">What remains are indie devtools, solo-founder SaaS, unknown studios, underground commerce, and Awwwards long-tail winners — all live and HTTP-verified October 2026 (dead/redirect-looped candidates were dropped).</p>
+  </div>
+</header>
+
+<!-- ========== PART 0 ========== -->
+<section id="styles" class="wrap">
+  <p class="eyebrow">Part 00</p>
+  <h2>11 emerging styles to watch</h2>
+  <p class="sec-sub">Distilled from 2025&ndash;2026 trend reports, Awwwards SOTD/SOTM winners and SaaS teardowns. None is fully mainstream yet; each solves a real problem — template sameness, feature density, short attention spans.</p>
+
+  <div class="bento">
+    <article class="tile rv"><span class="num">01</span>
+      <h4>Living Bento 2.0</h4>
+      <p>Static tile grids evolve into interactive micro-apps: live data, hover-expand tiles, looped video, toggles and mini-demos inside each cell.</p>
+      <p class="pot"><b>Trend potential</b>Solves SaaS feature-density without a 10,000px scroll; scans fast, collapses on mobile, turns marketing into demo.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">02</span>
+      <h4>Elevated / Neo-Brutalism</h4>
+      <p>Thick borders, hard offset shadows, flat saturated color, mono/system type, deliberate asymmetry, anti-corporate copy.</p>
+      <p class="pot"><b>Trend potential</b>Rebellion against identical Inter-on-white SaaS; cheap to build, extremely memorable.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">03</span>
+      <h4>Tactile Maximalism / Dopamine Design</h4>
+      <p>Oversized display type bleeding off-viewport, saturated hero color + accents, overlapping layers, scribbles, drifting blobs.</p>
+      <p class="pot"><b>Trend potential</b>Antidote to template sameness; lifts scroll-depth/signup in DTC and creator tools when hierarchy holds.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">04</span>
+      <h4>Kinetic + Oversized Typography</h4>
+      <p>Variable fonts changing weight/width on scroll/hover, rotating headline words, type <em>as</em> the hero image.</p>
+      <p class="pot"><b>Trend potential</b>Performant in pure CSS; compresses multi-benefit value props into one line.</p>
+    </article>
+
+    <article class="tile rv wide"><span class="num">05</span>
+      <h4>Dark Immersive Cinematic</h4>
+      <p>Near-black canvas, ONE electric accent, glowing 3D renders, gradient applied to a single element only.</p>
+      <p class="pot"><b>Trend potential</b>Premium signal; lets product UI and CTA pop at high contrast without gradient-everything mess.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">06</span>
+      <h4>Grain / Noise + Aurora Mesh 2.0</h4>
+      <p>Subtle SVG noise / halftone / paper grain over restrained two-tone mesh gradients.</p>
+      <p class="pot"><b>Trend potential</b>Kills sterile flatness for near-zero bytes; reads as &ldquo;human-made.&rdquo;</p>
+    </article>
+
+    <article class="tile rv"><span class="num">07</span>
+      <h4>Y2K 2.0 — Glossy Techno-Nostalgia</h4>
+      <p>Chrome/holographic type, candy pastels, pixel fonts, faux-OS windows, badges, marquees.</p>
+      <p class="pot"><b>Trend potential</b>Gen-Z discovery + millennial optimism-nostalgia; feels handmade.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">08</span>
+      <h4>Retro-Futurism / Synthwave</h4>
+      <p>Neon grids, chrome sunsets, VHS scanlines, glitch, LED type, cyber glow on black.</p>
+      <p class="pot"><b>Trend potential</b>Rides the sci-fi/cyberpunk wave; high-impact heroes without full 3D cost.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">09</span>
+      <h4>Scrapbook Collage + Broken Organic Grid</h4>
+      <p>Overlapping stickers, torn edges, mixed serif+sans in one sentence, blobs instead of a 12-column grid.</p>
+      <p class="pot"><b>Trend potential</b>The 2026 &ldquo;fight against sameness&rdquo; — craft and curation over templates.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">10</span>
+      <h4>Sticky Scroll Storytelling + Horizontal Chapters</h4>
+      <p>One narrative: sticky growing type, scroll-triggered scenes, an occasional horizontal gallery chapter, one quiet CTA.</p>
+      <p class="pot"><b>Trend potential</b>Boosts comprehension for complex products; premium feel from easing + pinning alone.</p>
+    </article>
+
+    <article class="tile rv"><span class="num">11</span>
+      <h4>Hyperreal 3D Abstract — Clay, Chrome, Inflatable</h4>
+      <p>Inflatable type, soft clay blobs, liquid chrome, pressable physics on minimal layouts.</p>
+      <p class="pot"><b>Trend potential</b>WebGL is cheap now; one hero object differentiates the whole page.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ========== PART 1 ========== -->
+<section id="dual" class="wrap">
+  <p class="eyebrow">Part 01 — 22 sites</p>
+  <h2>Novel landing pages with both light &amp; dark mode</h2>
+  <p class="sec-sub">All URLs returned HTTP 200 and carry a real, markup-verified theme mechanism (Docusaurus <code style="font-family:var(--mono);color:var(--accent)">colorModeToggle</code>, VitePress <code style="font-family:var(--mono);color:var(--accent)">VPSwitchAppearance</code>, Starlight <code style="font-family:var(--mono);color:var(--accent)">starlight-theme-select</code>, or <code style="font-family:var(--mono);color:var(--accent)">data-theme</code> switches). Entries marked &ldquo;docs&rdquo; use the project&rsquo;s docs-site URL because that is where the toggle lives and where the design work is visible.</p>
+
+  <div class="shortlist-note rv">
+    <b>★ Shortlist update (4 picks):</b> <b>Elysia</b> (#02) — <b>Hero Section and Workflow Section</b>; <b>UnoCSS</b> (#05) — <b>intersection of Hero and the immediate next section</b>; <b>Slidev</b> (#06) — <b>Hero Section</b>; <b>Healthchecks</b> (#17, Indie dashboards &amp; utilities) — <b>Hero Section</b> (animated SVG explainer).
+  </div>
+
+  <h3 class="group">Niche frameworks &amp; toolchains</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">01</span><h4>MikroORM</h4><a class="url" href="https://mikro-orm.io" target="_blank" rel="noopener">mikro-orm.io &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie devtool / TypeScript ORM</span><span class="chip">Dual code-column hero</span><span class="chip">Database-logo grid</span></div>
+      <p>Pitches &ldquo;proven patterns, not magic&rdquo; with a 12-database logo grid and side-by-side entity-definition vs. EntityManager code columns. The docs-first landing inverts cleanly via Docusaurus theming — a lesson in letting code samples, not illustrations, carry the page in both modes.</p>
+    </article>
+
+    <article class="card shortlisted rv">
+      <div class="card-top"><span class="idx">02</span><h4>Elysia</h4><a class="url" href="https://elysiajs.com" target="_blank" rel="noopener">elysiajs.com &#8599;</a></div>
+      <div class="chips"><span class="chip star">★ Shortlisted Hero + Workflow</span><span class="chip cat">Niche framework / Bun-first</span><span class="chip">Mascot branding</span><span class="chip">Benchmark charts</span><span class="chip">Plugin gallery</span></div>
+      <p>Ergonomic-framework positioning with mascot art, inline benchmark charts, and a plugin gallery inside VitePress. Playful without being unserious — the sun/moon switch plus system detection keeps the candy aesthetic legible in both themes. <b>Shortlisted: Hero Section and Workflow Section.</b></p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">03</span><h4>Wasp</h4><a class="url" href="https://wasp.sh" target="_blank" rel="noopener">wasp.sh &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche framework / full-stack config-DSL</span><span class="chip">One-liner DSL demo</span><span class="chip">Friendly indie voice</span></div>
+      <p>&ldquo;Ship full-stack in a day&rdquo; told through config one-liners (auth, jobs, email) rather than architecture diagrams. Small-team YC-alumni voice, Docusaurus system-aware theming — proof a framework landing can read like a recipe card.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">04</span><h4>SST</h4><a class="url" href="https://sst.dev" target="_blank" rel="noopener">sst.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche infra / AWS IaC (Ion)</span><span class="chip">Terminal-first</span><span class="chip">Deploy-log hero</span><span class="chip">Version picker</span></div>
+      <p>Live Lambda-log styling and a deploy-preview hero framed like a terminal session, with the theme control sitting next to the version picker. Starlight <code style="font-family:var(--mono);color:var(--accent)">starlight-theme-select</code> verified in markup — terminal aesthetics that survive daylight.</p>
+    </article>
+
+    <article class="card shortlisted rv">
+      <div class="card-top"><span class="idx">05</span><h4>UnoCSS</h4><a class="url" href="https://unocss.dev" target="_blank" rel="noopener">unocss.dev &#8599;</a></div>
+      <div class="chips"><span class="chip star">★ Shortlisted Hero ∩ Next Section</span><span class="chip cat">Indie CSS engine / atomic CSS</span><span class="chip">Playground-in-docs</span><span class="chip">Preset/icon galleries</span></div>
+      <p>The engine demo is embedded in the landing itself — utility playground plus preset and icon galleries you can touch. VitePress appearance switch verified; on-demand-generation as interactive marketing, not a features list. <b>Shortlisted: intersection of Hero and the immediate next section.</b></p>
+    </article>
+
+    <article class="card shortlisted rv">
+      <div class="card-top"><span class="idx">06</span><h4>Slidev</h4><a class="url" href="https://sli.dev" target="_blank" rel="noopener">sli.dev &#8599;</a></div>
+      <div class="chips"><span class="chip star">★ Shortlisted Hero</span><span class="chip cat">Indie devtool / Markdown slides</span><span class="chip">Landing-is-a-deck</span><span class="chip">Live slide demo</span></div>
+      <p>The landing page is itself a slide-deck pitch — a live slide demo in the hero plus theme/addon galleries. Same verified VitePress toggle; the medium (slides) demonstrates the product with zero explanation overhead. <b>Shortlisted: Hero Section.</b></p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">07</span><h4>Biome <span style="color:var(--txt-faint);font-weight:400;font-size:.8em">(bonus pick)</span></h4><a class="url" href="https://biomejs.dev" target="_blank" rel="noopener">biomejs.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Community toolchain / formatter+linter</span><span class="chip">Slogan-SVG swap</span><span class="chip">Mouse-glow cards</span></div>
+      <p>Ships separate light/dark slogan SVGs swapped by theme plus mouse-tracking glow cards. Starlight theme select with Dark/Light/Auto — rare attention to <em>illustration</em> theming, not just tokens, at community-project scale.</p>
+    </article>
+  </div>
+
+  <h3 class="group">Open-source SaaS alternatives (docs-site URLs — toggle verified)</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">08</span><h4>Bruno</h4><a class="url" href="https://docs.usebruno.com" target="_blank" rel="noopener">docs.usebruno.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie API client / offline Postman alt</span><span class="chip">VSCode-inspired</span><span class="chip">Concept-front-and-center</span></div>
+      <p>Leads with the Git-backed <code style="font-family:var(--mono);color:var(--accent)">bru</code>-file concept instead of feature bingo, in a VSCode-flavored layout where docs double as product tour. <code style="font-family:var(--mono);color:var(--accent)">data-theme</code> verified — offline-first positioning expressed through file metaphors developers already trust.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">09</span><h4>NocoDB</h4><a class="url" href="https://docs.nocodb.com" target="_blank" rel="noopener">docs.nocodb.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Open-source Airtable alt</span><span class="chip">Live demo embeds</span><span class="chip">ER-diagram visuals</span></div>
+      <p>Spreadsheet-to-API story with embedded live demos and ER-diagram art; literal &ldquo;Toggle Theme&rdquo; control found in served HTML. Turns the driest possible product (database UI) into something you poke at within seconds.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">10</span><h4>Logto</h4><a class="url" href="https://docs.logto.io" target="_blank" rel="noopener">docs.logto.io &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie auth / Clerk-Auth0 alt</span><span class="chip">Flow diagrams</span><span class="chip">Per-framework quick-starts</span><span class="chip">Dual logos</span></div>
+      <p>Sign-in-flow diagrams and per-framework quick-starts above the fold, with dual <code style="font-family:var(--mono);color:var(--accent)">logto.svg</code> / <code style="font-family:var(--mono);color:var(--accent)">logto_dark.svg</code> logos swapped by theme (Docusaurus system default). Auth explained as diagrams you can follow, not paragraphs you must parse.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">11</span><h4>Ory</h4><a class="url" href="https://www.ory.sh/docs" target="_blank" rel="noopener">ory.sh/docs &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche identity infra</span><span class="chip">Network-graph visuals</span><span class="chip">Redoc API references</span></div>
+      <p>Identity/permissions drawn as network graphs inside a customized Docusaurus shell, Redoc references inline. Docusaurus theme + themed logos verified — graph visuals make abstract permission models concrete in both modes.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">12</span><h4>Plane</h4><a class="url" href="https://docs.plane.so" target="_blank" rel="noopener">docs.plane.so &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Open-source PM / Linear alt</span><span class="chip">Restrained minimalism</span><span class="chip">Cycle/triage visuals</span></div>
+      <p>Deliberately calmer than its famous competitor — cycle/triage visuals, dual white/dark logos swapped per theme (<code style="font-family:var(--mono);color:var(--accent)">vitepress-theme-appearance</code> verified). Interesting as a case study in out-restraining the incumbent rather than out-glowing it.</p>
+    </article>
+  </div>
+
+  <h3 class="group">Indie dashboards &amp; utilities</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">13</span><h4>OpenPanel</h4><a class="url" href="https://openpanel.dev" target="_blank" rel="noopener">openpanel.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Lesser-known analytics / open-source</span><span class="chip">Live-demo embed</span><span class="chip">Simplicity-first cards</span></div>
+      <p>&ldquo;Mixpanel power, Plausible simplicity&rdquo; with a live demo embedded directly (<code style="font-family:var(--mono);color:var(--accent)">demo.openpanel.dev</code>) and a <code style="font-family:var(--mono);color:var(--accent)">Toggle theme</code> button verified in nav HTML. Converts skeptics by handing over the product before the pricing table.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">14</span><h4>IT-Tools</h4><a class="url" href="https://it-tools.tech" target="_blank" rel="noopener">it-tools.tech &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Micro utility / 100+ client-side tools</span><span class="chip">Pastel card grid</span><span class="chip">No-tracking ethos</span></div>
+      <p>100+ fully client-side tools in a pastel card grid with a <code style="font-family:var(--mono);color:var(--accent)">dark_mode</code> toolbar button. Self-hostable, no tracking — the anti-dashboard: usefulness density as the entire aesthetic, in both themes.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">15</span><h4>Beszel</h4><a class="url" href="https://beszel.dev" target="_blank" rel="noopener">beszel.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Obscure monitoring / solo founder</span><span class="chip">Friendly charts</span><span class="chip">Hub-and-agent story</span></div>
+      <p>Tiny Go agent + hub told through friendly Docker/S.M.A.R.T./GPU history charts, VitePress Appearance selector verified. Monitoring that looks like a hobby dashboard rather than an NOC wall — approachable in light or dark.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">16</span><h4>Ryot</h4><a class="url" href="https://ryot.io" target="_blank" rel="noopener">ryot.io &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche tracker / self-hosted (Rust + GraphQL)</span><span class="chip">&ldquo;Roll your own&rdquo; manifesto</span><span class="chip">Import-matrix proof</span></div>
+      <p>Media + fitness + habits in one dashboard, with a 16-source import matrix as the credibility device; features page explicitly promises dark and light mode. Quantified-self maximalism without a single SaaS pricing scare.</p>
+    </article>
+
+    <article class="card shortlisted rv">
+      <div class="card-top"><span class="idx">17</span><h4>Healthchecks</h4><a class="url" href="https://healthchecks.io" target="_blank" rel="noopener">healthchecks.io &#8599;</a></div>
+      <div class="chips"><span class="chip star">★ Shortlisted Hero</span><span class="chip cat">Indie micro-SaaS / cron monitoring</span><span class="chip">Animated SVG explainer</span><span class="chip">Badge-first social proof</span></div>
+      <p>The how-it-works is an animated SVG (ssl-renewal → update-metrics → prod-backup) with <code style="font-family:var(--mono);color:var(--accent)">.theme-dark / .theme-light</code> verified in CSS. Silence-is-the-alert logic explained visually — 20 checks free, status badges as viral loop. <b>Shortlisted for the hero section.</b></p>
+    </article>
+  </div>
+
+  <h3 class="group">Niche commerce, icons &amp; indie AI frontends</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">18</span><h4>Vendure</h4><a class="url" href="https://vendure.io" target="_blank" rel="noopener">vendure.io &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche e-commerce / headless B2B (GPLv3)</span><span class="chip">Live B2B demo</span><span class="chip">Quotes-and-approvals theater</span></div>
+      <p>A live B2B demo (<code style="font-family:var(--mono);color:var(--accent)">/admin/approvals</code>) showing quotes, approvals, and company accounts — B2B workflows staged as theater instead of bullet points. One TypeScript core + GraphQL for D2C/B2B/marketplace, dashboard themeable both ways.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">19</span><h4>Lucide</h4><a class="url" href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie design tool / icon toolkit</span><span class="chip">Live customizer</span><span class="chip">Package-matrix</span></div>
+      <p>1,800+ consistent stroke icons with a live customizer (color/stroke/size) and tree-shakable packages per framework; Appearance toggle in nav. The search-and-tweak playground <em>is</em> the landing — zero screenshots needed.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">20</span><h4>TypingMind</h4><a class="url" href="https://www.typingmind.com" target="_blank" rel="noopener">typingmind.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie AI frontend / BYOK (solo founder)</span><span class="chip">Settings-as-marketing</span><span class="chip">PWA pragmatism</span></div>
+      <p>Markets through its settings surface — &ldquo;beautiful dark mode,&rdquo; sidebar themes, folders, prompt library, parallel chats — with one-time-license pragmatism against subscription AI. A masterclass in selling to power users via preferences, not promises.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">21</span><h4>Jan</h4><a class="url" href="https://jan.ai" target="_blank" rel="noopener">jan.ai &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Obscure AI / offline open-source runner</span><span class="chip">Neo-brutalist blue hero</span><span class="chip">Download-counter proof</span></div>
+      <p>Neo-brutalist blue hero with floating robot and a &ldquo;6.9M downloads&rdquo; counter; 100%-offline inference with cloud fallback. <code style="font-family:var(--mono);color:var(--accent)">.dark</code> vars + <code style="font-family:var(--mono);color:var(--accent)">prefers-color-scheme</code> verified — local-first AI positioned like a consumer appliance, not a lab.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">22</span><h4>Trigger.dev</h4><a class="url" href="https://trigger.dev" target="_blank" rel="noopener">trigger.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Lesser-known devtool / durable AI jobs</span><span class="chip">Code-first hero</span><span class="chip">Waitpoint visualization</span></div>
+      <p>Hero is a <code style="font-family:var(--mono);color:var(--accent)">chat.agent</code> snippet with human-approval waitpoints, backed by realtime run tracing and no-timeout long tasks. Docs + dashboard system-aware with manual theme — background-jobs made narratable.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ========== PART 2 ========== -->
+<section id="dark" class="wrap">
+  <p class="eyebrow">Part 02 — 23 sites</p>
+  <h2>Novel dark-mode-only landing pages</h2>
+  <p class="sec-sub">No light toggle by design. All URLs returned HTTP 200 (two redirect-looped/dead candidates from research were dropped and replaced).</p>
+
+  <h3 class="group">Unknown studios &amp; WebGL experiments (Awwwards long-tail)</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">01</span><h4>Arqui9</h4><a class="url" href="https://arqui9.com" target="_blank" rel="noopener">arqui9.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Unknown creative studio / archviz films (SOTD Jul 2025)</span><span class="chip">Film-first</span><span class="chip">Drag-gallery</span><span class="chip">Title-sequence pacing</span></div>
+      <p>Full-screen lifestyle films plus a drag-gallery cut like a title sequence for architecture — heavy video engineered to stay performant. Lesson: let motion do the selling and keep chrome nearly absent.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">02</span><h4>Studio K95</h4><a class="url" href="https://k95.it/en" target="_blank" rel="noopener">k95.it/en &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Unknown studio / brand + type (Catania, SOTD Aug 2026)</span><span class="chip">Brutal dark-editorial</span><span class="chip">Electric blue</span><span class="chip">Type-as-interface</span></div>
+      <p>Near-black editorial with electric-blue <code style="font-family:var(--mono);color:var(--accent)">#1500E1</code> accents and custom fonts (Stelvio Grotesk / Herbert) functioning as the interface itself. Kinetic typography replaces navigation decoration — type nerds will screenshot everything.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">03</span><h4>Malvah Studio</h4><a class="url" href="http://malvah.co" target="_blank" rel="noopener">malvah.co &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Unknown studio / brand + digital (Cape Town, Studio of the Year 2025)</span><span class="chip">3D-morphing monogram</span><span class="chip">Reel-first nav</span><span class="chip">Case index</span></div>
+      <p>Near-black throughout with morphing 3D &ldquo;S&rdquo; sculptures, reel-first navigation, cases indexed like specimens (<code style="font-family:var(--mono);color:var(--accent)">SI_01</code>). Studio-of-the-Year fame confined to design Twitter — exactly the obscurity-plus-craft combo this list targets.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">04</span><h4>Malvah Experiment</h4><a class="url" href="https://experiment.malvah.co" target="_blank" rel="noopener">experiment.malvah.co &#8599;</a></div>
+      <div class="chips"><span class="chip cat">WebGL lab / 48+ autonomous R&amp;D tests</span><span class="chip">Lab grid</span><span class="chip">Tap-to-close microsites</span><span class="chip">No-client-polish</span></div>
+      <p>A grid of 48+ raw experiments — typography, 3D, motion, dev — with zero client polish, each opening as a tap-to-close microsite. The anti-portfolio: process exhibited as product, dark canvas unifying wildly different tests.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">05</span><h4>Faint Film</h4><a class="url" href="https://www.faint-film.com" target="_blank" rel="noopener">faint-film.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Photo-art portfolio / WebGL diary (SOTD Jun 2025)</span><span class="chip">Faint-memory shaders</span><span class="chip">Time-of-day color shift</span></div>
+      <p>A Sigma FP photo diary rendered as &ldquo;faint memory&rdquo; — instanced shaders, clip-visual transitions, colors shifting with time of day. Engineer-as-artist minimalism; photography sites should steal the temporal-color idea.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">06</span><h4>100 Lost Species</h4><a class="url" href="https://www.100lostspecies.com" target="_blank" rel="noopener">100lostspecies.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Interactive memorial / extinction storytelling (SOTD Oct 2025)</span><span class="chip">100-second countdown</span><span class="chip">Horizontal scroll</span><span class="chip">Ephemeral illustration</span></div>
+      <p>A digital memorial to extinction where you get 100 seconds before the site itself fades — horizontal scroll, ticking clock, dissolving illustrations. Ephemerality as interaction design; the constraint <em>is</em> the message.</p>
+    </article>
+  </div>
+
+  <h3 class="group">Indie games (cinematic dark, small teams)</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">07</span><h4>Dark Fracture</h4><a class="url" href="https://darkfracture.com" target="_blank" rel="noopener">darkfracture.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie game / first-person cosmic horror</span><span class="chip">Parallel-world lore</span><span class="chip">Press-kit-as-dossier</span></div>
+      <p>Pitch-black landing with body-farm-to-alien-world lore and a press kit styled as a horror dossier. Converts journalists and players with the same artifact — marketing and mythos in one object.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">08</span><h4>The Unknowns Games</h4><a class="url" href="https://www.the-unknownsgames.com" target="_blank" rel="noopener">the-unknownsgames.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie horror studio / backrooms co-op</span><span class="chip">Endless-night studio site</span><span class="chip">Steam-native conversion</span></div>
+      <p>Boutique behind backrooms-style co-op horror; the studio site itself is endless night, funneling to Steam with lore as the persuasive layer. Proof a two-page dark site can carry a whole studio.</p>
+    </article>
+  </div>
+
+  <h3 class="group">Underground music / fashion / editorial commerce</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">09</span><h4>DARKFOO</h4><a class="url" href="https://darkfoo.com" target="_blank" rel="noopener">darkfoo.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Underground music / AV experiment (est. 2025)</span><span class="chip">Audio-reactive matrix</span><span class="chip">Ambience selector</span><span class="chip">Club-door UX</span></div>
+      <p>An audio-reactive cyberpunk matrix with glitch/biomorphic/quantum-drift ambience modes and an authenticate-to-enter club-door flow. The bouncer interaction filters casuals — community gating as landing design.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">10</span><h4>DARK HOURS</h4><a class="url" href="https://darkhours.us" target="_blank" rel="noopener">darkhours.us &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Underground fashion / Chicago streetwear</span><span class="chip">All-black Shopify brutalism</span><span class="chip">Drop storytelling</span></div>
+      <p>Heavyweight denim/thermals sold through &ldquo;DEATH WISH / MIDNIGHT NOSTALGIA&rdquo; drop narratives with in-house print stories. No light theme, no lifestyle dilution — scarcity and ink carry the conversion.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">11</span><h4>Odd Ritual Golf Club</h4><a class="url" href="https://oddritualgolf.com" target="_blank" rel="noopener">oddritualgolf.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Underground fashion / lo-fi golf counter-culture (SOTD Apr 2026)</span><span class="chip">Grainy film photography</span><span class="chip">Editorial-meets-Shopify</span><span class="chip">Three.js transitions</span></div>
+      <p>Golf reimagined as counter-culture — grainy film, editorial storytelling fused with a custom Shopify theme, GSAP/Barba transitions. Category-defying positioning: preppy sport, punk execution.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">12</span><h4>Greycat Records</h4><a class="url" href="https://greycatrecords.com" target="_blank" rel="noopener">greycatrecords.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Underground e-commerce / goth vinyl shop (Raleigh)</span><span class="chip">Black-on-black storefront</span><span class="chip">Genre-as-navigation</span></div>
+      <p>Goth/darkwave/EBM vinyl sold through genre taxonomy (Goth/Darkwave, Industrial/EBM, Post-Punk) as navigation, with &ldquo;Mining The Underground&rdquo; storytelling. Curation replaces the generic Shopify grid — taxonomy as design.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">13</span><h4>Disko Obscura</h4><a class="url" href="https://diskoobscura.cargo.site/Front-page" target="_blank" rel="noopener">diskoobscura.cargo.site &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Vinyl label/distro / coldwave, italo, EBM (New Orleans)</span><span class="chip">Cargo brutalism</span><span class="chip">Single-scroll ritual</span><span class="chip">No-repress doctrine</span></div>
+      <p>&ldquo;All releases pressed once, no represses since 2009&rdquo; on a stark Cargo page folding distro + events + show archive into one scroll. Scarcity doctrine as the entire brand system — collectibility designed in.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">14</span><h4>DARKLY Magazine</h4><a class="url" href="https://darklymagazine.com" target="_blank" rel="noopener">darklymagazine.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Dark editorial / avant-garde fashion magazine</span><span class="chip">Void-black collectible layout</span><span class="chip">Ivory type</span><span class="chip">Photo-carried color</span></div>
+      <p>Pure-black collectible-issue layout with Darkly Art + Noir sections; photography carries all color while type stays ivory on void. Editorial proof that restraint amplifies imagery instead of competing with it.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">15</span><h4>Synthrave Live</h4><a class="url" href="https://www.synthravelive.com" target="_blank" rel="noopener">synthravelive.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Festival / UK synthwave</span><span class="chip">Full synthwave system</span><span class="chip">Perspective grid</span><span class="chip">Chrome type</span></div>
+      <p>The UK&rsquo;s dedicated synthwave festival with a complete outrun system — perspective grids, chrome type, scanlines, volumetric-projection vibes, cosplay + arcade framing. Event landing as genre cosplay; total commitment converts.</p>
+    </article>
+  </div>
+
+  <h3 class="group">Obscure crypto &amp; tiny AI (dark-native, small teams)</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">16</span><h4>Noctis Zone</h4><a class="url" href="https://noctis.zone" target="_blank" rel="noopener">noctis.zone &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Obscure crypto / privacy launchpad (ZK, Cardano/Midnight)</span><span class="chip">Terminal + bond-curve aesthetic</span><span class="chip">$DEGEN visual mode</span></div>
+      <p>Zero-knowledge DarkVeil launches with hidden buy amounts and on-chain Fair Launch Certificates, styled as terminal-meets-bond-curve with a <code style="font-family:var(--mono);color:var(--accent)">$DEGEN</code> mode toggle. Privacy tech explained through trader-native visuals, not whitepapers.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">17</span><h4>Dark Research</h4><a class="url" href="https://www.darkresearch.ai" target="_blank" rel="noopener">darkresearch.ai &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Obscure AI lab / generative-UI + micropayments</span><span class="chip">Ultra-minimal black lab</span><span class="chip">Streaming-component hints</span></div>
+      <p>&ldquo;An AI lab for the new internet&rdquo; on near-void black — streaming UI components, x402 micropayments, on-chain receipts, almost no decoration. The post-visual lab aesthetic at indie scale; seriousness signaled by refusal.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">18</span><h4>Coppice AI</h4><a class="url" href="https://coppice-ai.com" target="_blank" rel="noopener">coppice-ai.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Tiny AI business / disclosed vending agent (x402)</span><span class="chip">Log-as-landing</span><span class="chip">Public FAIL reports</span><span class="chip">Verifiable claims</span></div>
+      <p>A one-server agent shop where the landing is the operations log — every wake, every on-chain verifiable claim, public failure reports, shipped Blender scenes with CC0 scripts. Radical transparency as the most novel trust mechanic in this file.</p>
+    </article>
+  </div>
+
+  <h3 class="group">Niche dev-infra by tiny teams (dark terminal-first)</h3>
+  <div class="cards">
+    <article class="card rv">
+      <div class="card-top"><span class="idx">19</span><h4>JustRun</h4><a class="url" href="https://justrun.sh" target="_blank" rel="noopener">justrun.sh &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche infra / cron with AI diagnostics</span><span class="chip">Live CLI block</span><span class="chip">Escalation-timeline demo</span></div>
+      <p>Hero carries a live <code style="font-family:var(--mono);color:var(--accent)">npx</code> CLI block with dead-letter-queue UI and AI-written failure diagnoses inside an escalation timeline. Alerts arrive with a root-cause paragraph, not a red dot — the demo teaches the differentiation.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">20</span><h4>LiveFlags</h4><a class="url" href="https://liveflags.app" target="_blank" rel="noopener">liveflags.app &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche API / feature flags for indie hackers</span><span class="chip">Millis-latency pulse</span><span class="chip">One-line-install hero</span></div>
+      <p>Pitch-black docs-style landing with a WebSocket instant-propagation demo visualized as a millisecond latency pulse and a one-line SDK install. No enterprise sales chrome — realtime shown, not claimed.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">21</span><h4>AnyCron</h4><a class="url" href="https://anycron.com" target="_blank" rel="noopener">anycron.com &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Niche infra / plain-English monitors</span><span class="chip">Terminal prompt hero</span><span class="chip">No-cron-expressions</span></div>
+      <p>A dark terminal prompt (<code style="font-family:var(--mono);color:var(--accent)">$ describe your job:</code>) turns &ldquo;every 30min, watch competitor pricing, deliver to Slack&rdquo; into a live monitor — no cron syntax, with diffs + AI summaries in the inbox. Natural-language infra without the chatbot costume.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">22</span><h4>Cronaut</h4><a class="url" href="https://cronaut.dev" target="_blank" rel="noopener">cronaut.dev &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie infra / uptime + cron + SSL + status pages</span><span class="chip">One-engine story</span><span class="chip">SSE incident automation</span></div>
+      <p>&ldquo;Monitor everything. Post nothing.&rdquo; — one check engine feeds incidents plus an SEO-friendly status page that opens/closes itself over SSE. The status page writes itself from failed checks; automation as the headline.</p>
+    </article>
+
+    <article class="card rv">
+      <div class="card-top"><span class="idx">23</span><h4>StillOnline</h4><a class="url" href="https://stillonline.tech" target="_blank" rel="noopener">stillonline.tech &#8599;</a></div>
+      <div class="chips"><span class="chip cat">Indie infra / agent-readable status pages (MCP)</span><span class="chip">60-second onboarding</span><span class="chip">Agent-readable status</span></div>
+      <p>HTTP checks → live <code style="font-family:var(--mono);color:var(--accent)">/s/{slug}</code> page → Telegram/Slack/email plus an MCP server so coding agents can read your status. The niche twist — status pages designed for agents, not just humans — is perfectly timed for 2026.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ========== HOW TO USE ========== -->
+<section id="howto" class="wrap">
+  <p class="eyebrow">Playbook</p>
+  <h2>How to use this file</h2>
+  <div class="howto">
+    <article class="tile rv">
+      <h4>Dual-theme without looking like everyone?</h4>
+      <p>Start from <b style="color:var(--txt)">OpenPanel / IT-Tools / Beszel</b> (demo-first, toggle-verified), then add one pre-mainstream twist: grain overlay, kinetic headline, or a playground embedded in the hero.</p>
+    </article>
+    <article class="tile rv">
+      <h4>Dark-only with a pulse?</h4>
+      <p>Start from <b style="color:var(--txt)">K95 / Odd Ritual / 100 Lost Species</b> (editorial + constraint-driven), then differentiate with synthwave chrome, scrapbook collage, or a log-as-landing transparency mechanic so you don&rsquo;t become Linear clone #4,000.</p>
+    </article>
+    <article class="tile rv">
+      <h4>Cheapest high-impact upgrades</h4>
+      <p>Observed across these winners: 4% SVG noise overlay, one variable-font display face, a sticky scroll chapter for the complex feature, and a live interactive widget in the hero instead of a static screenshot.</p>
+    </article>
+  </div>
+
+  <footer>
+    <p>Research compiled October 2026 · v2.1 sanitized to novel sites only · Shortlisted: Elysia (Hero + Workflow), UnoCSS (Hero ∩ next section), Slidev (Hero), Healthchecks (Hero) · URLs are live homepages/docs; designs change — capture screenshots for anything you reference long-term.</p>
+  </footer>
+</section>
+
+<script>
+  // scroll progress
+  const bar = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = pct + '%';
+  };
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // reveal on scroll
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = Math.min(i * 45, 220) + 'ms';
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
